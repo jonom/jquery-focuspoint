@@ -2,9 +2,11 @@
 
 ## Intelligent cropping for flexible image containers
 
+![image](demos/img/demo.jpg?raw=true)
+
 Websites don't have a single layout any more. The space you have for an image may be portrait on a laptop, landscape on a tablet, and square on a mobile - particularly if you're using a full-screen image.
 
-![image](demos/img/demo.jpg?raw=true)
+If you have to use the same image file in all these contexts, you might not be happy with the results you get when you 'fill' the allocated space with your image. Your subject might be clipped or completely missing, or just really awkward looking.
 
 FocusPoint makes sure your image looks great in any container, by ensuring the 'spare' parts of your image (negative space) are cropped out before the important parts.
 
@@ -28,15 +30,15 @@ FocusPoint requires you to indicate where this focal point is located within you
 
 ## How to use
 
-#### Calculate your image's focus point
+#### 1. Calculate your image's focus point
 
-An image's **focus point** is made up of x (horizontal) and y (vertical) coordinates. The value of a coordinate can be a number with decimal points anywhere between -1 and +1, where 0 is the centre. X:-1 indicates the left edge of the image, x:1 the right edge. For the y axis, y:1 is the top edge and y:-1 is the bottom.
+An image's focus point is made up of x (horizontal) and y (vertical) coordinates. The value of a coordinate can be a number with decimal points anywhere between -1 and +1, where 0 is the centre. X:-1 indicates the left edge of the image, x:1 the right edge. For the y axis, y:1 is the top edge and y:-1 is the bottom.
 
 ![image](demos/img/grid.png?raw=true)
 
-**Pretty confusing eh?** Don't worry, I've included a handy script to help you find the focus coordinates of an image with a single click. [See an example here](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html).
+**Confused?** Don't worry, I've included a handy script to help you find the focus coordinates of an image with a single click. [See an example here](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html).
 
-#### Include javascript and CSS
+#### 2. Include javascript and CSS
 
 You'll need to include jQuery, the FocusPoint script, and FocusPoint css file. Example:
 
@@ -44,7 +46,7 @@ You'll need to include jQuery, the FocusPoint script, and FocusPoint css file. E
 	<script src="jquery.js"></script>
 	<script src="focuspoint.js"></script>
 	
-#### Mark up image container
+#### 3. Mark up image container
 
 Specify the image dimensions and focus point coordinates on the image container. Note: I know it shouldn't really be necessary to specify image dimensions but I've found this to be more reliable than reading the dimensions from the image. Example:
 
@@ -56,7 +58,7 @@ Specify the image dimensions and focus point coordinates on the image container.
 		<img src="image.jpg" alt="" />
 	</div>
 
-#### Fire FocusPoint plugin
+#### 4. Fire FocusPoint plugin
 
 Usually the best place for this will be inside your `$(document).ready()` function.
 
