@@ -1,0 +1,82 @@
+/* !CONTAINERS */
+/*-----------------------------------------*/
+
+html,body{
+	height: 100%;
+	width: 100%;
+	max-height: none;
+	max-width: none;
+	overflow: hidden;/*Prevent scrollbars in IE8*/
+	margin: 0;
+}
+body {
+	position: fixed;
+	left: 5px;
+	right: 5px;
+	top: 5px;
+	bottom: 5px;
+	height: auto;
+	width: auto;
+}
+
+#Frame1, #Frame2 {
+	position: absolute;
+	overflow: hidden;
+	border: 5px solid #fff;
+	margin: -5px 0 0 -5px;
+	width: 37.5%;
+	height: 100%;
+	left: 25%;
+	top: 0;
+}
+#Frame2 {
+	left: 62.5%;
+	background-image: url(../img/bird.jpg);
+	background-size: cover;
+	background-position: 64.4677661% 64.2%;
+}
+
+/* !INFO */
+/*-----------------------------------------*/
+
+#Info {
+	position: absolute;
+	left: 2%;
+	top: 2%;
+	width: 20%;
+	box-shadow: 0px 0px 13px rgba(0,0,0,0.6);
+	font-family: sans-serif;
+	color: #717171;
+	background: #fff;
+	border: 1px solid #fff;
+}
+#Info p {
+	font-size: 12px;
+	padding: 10px;
+	margin: 0;
+}
+#Original {
+	position: relative;
+}
+#Original img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	display: block;
+	margin: 0;
+}
+#Original h4 {
+	position: absolute;
+	left: 0;
+	bottom: 15px;
+	width: 100%;
+	text-align: center;
+	margin: 0;
+}
+#Original h4 span {
+	font-size: 12px;
+	padding: 3px 10px;
+	border-radius: 100px;
+	background: rgba(0,0,0,0.32);
+	color: #fff;
+}

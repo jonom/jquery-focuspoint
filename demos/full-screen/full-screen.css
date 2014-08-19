@@ -1,0 +1,11 @@
+/* !FULL SCREEN IMAGE */
+/*-----------------------------------------*/
+
+html,body,.focuspoint{
+	height: 100%;
+	width: 100%;
+	max-height: none;
+	max-width: none;
+	overflow: hidden;/*Prevent scrollbars in IE8*/
+	margin: 0;
+}

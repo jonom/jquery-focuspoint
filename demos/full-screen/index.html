@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>FocusPoint Example</title>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		
+		<link rel="stylesheet" type="text/css" href="../../css/focuspoint.css">
+		<link rel="stylesheet" type="text/css" href="full-screen.css">
+		
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.focuspoint.js"></script>
+		
+		<script type="text/javascript">
+		//<![CDATA[	
+			
+			(function($) {
+				$(document).ready(function() {
+					
+					//Fire plugin
+					$('.focuspoint').focusPoint();
+					
+				});
+			}(jQuery));
+		
+		//]]>
+		</script>
+		
+	</head>
+	<body>
+	
+		<div class="focuspoint"
+		data-focus-x="0.33"
+		data-focus-y="0.249"
+		data-image-w="922"
+		data-image-h="666">
+			<img src="../img/lizard.jpg" alt="" />
+		</div>
+	
+	</body>
+</html>
