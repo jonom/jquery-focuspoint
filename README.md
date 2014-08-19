@@ -12,12 +12,12 @@ FocusPoint makes sure your image looks great in any container, by ensuring the '
 
 Here are some examples showing the same image cropped a variety of different ways at once. Make sure you play with resizing the browser window to get a feel for what FocusPoint does.
 
-* 	[Lizard](http://htmlpreview.github.io/?https://github.com/jonom/jquery-focuspoint/blob/master/demos/grid/lizard.html)
-* 	[Kangaroo](http://htmlpreview.github.io/?https://github.com/jonom/jquery-focuspoint/blob/master/demos/grid/kangaroo.html)
-* 	[Dolphin](http://htmlpreview.github.io/?https://github.com/jonom/jquery-focuspoint/blob/master/demos/grid/dolphin.html)
-* 	[Bird](http://htmlpreview.github.io/?https://github.com/jonom/jquery-focuspoint/blob/master/demos/grid/bird.html)
+* 	[Lizard](http://jonom.github.io/jquery-focuspoint/demos/grid/lizard.html)
+* 	[Kangaroo](http://jonom.github.io/jquery-focuspoint/demos/grid/kangaroo.html)
+* 	[Dolphin](http://jonom.github.io/jquery-focuspoint/demos/grid/dolphin.html)
+* 	[Bird](http://jonom.github.io/jquery-focuspoint/demos/grid/bird.html)
 
-And here is a [full screen](http://htmlpreview.github.io/?https://github.com/jonom/jquery-focuspoint/blob/master/demos/full-screen/index.html) demo.
+And here is a [full screen](http://jonom.github.io/jquery-focuspoint/demos/full-screen/index.html) demo.
 
 ## How's it work?
 
@@ -34,7 +34,7 @@ An image's **focus point** is made up of x (horizontal) and y (vertical) coordin
 
 ![image](demos/img/grid.png?raw=true)
 
-**Pretty confusing eh?** Don't worry, I've included a handy script to help you find the focus coordinates of an image with a single click. [See an example here](http://htmlpreview.github.io/?https://github.com/jonom/jquery-focuspoint/blob/master/demos/helper/index.html).
+**Pretty confusing eh?** Don't worry, I've included a handy script to help you find the focus coordinates of an image with a single click. [See an example here](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html).
 
 #### Include javascript and CSS
 
@@ -82,7 +82,7 @@ In order for this concept of 'fluid cropping' to work well, your images will nee
 
 You can get a similar effect to this technique using only CSS and the `background-position` and `background-size` properties. Browser support isn't as good (at the moment) and your image won't be positioned exactly the same way - but it's pretty close. The CSS technique leans towards preserving the original composition while FocusPoint is biased towards keeping the subject of the image in the centre of the frame. Depending on your requirements either technique may suit you better.
 
-[Pure CSS Example and comparison](http://htmlpreview.github.io/?https://github.com/jonom/jquery-focuspoint/blob/master/demos/css-js-comparison/index.html)
+[Pure CSS Example and comparison](http://jonom.github.io/jquery-focuspoint/demos/css-js-comparison/index.html)
 
 #### SilverStripe CMS integration
 
@@ -90,7 +90,7 @@ This plugin plays really well with the [silverstripe-focuspoint](https://github.
 
 ## Feedback welcome!
 
-Nothing would encourage me to keep updating this script more than hearing how it's been used in the real world. Get in touch with me at [jonathonmenz.com](http://jonathonmenz.com) to let me know how you've used this plugin or any suggestions you have for improving it. Please report bugs or issues [on github](https://github.com/jonom/jquery-focuspoint).
+Nothing would encourage me to keep updating this script more than hearing how it's been used in the real world. Get in touch with me at [jonathonmenz.com](http://jonathonmenz.com) to let me know how you've used this plugin or any suggestions you have for improving it. Please [report bugs or issues on github](https://github.com/jonom/jquery-focuspoint/issues).
 
 **Feeling generous?**  
 If FocusPoint helped you impress a client and you want to say thanks, you're welcome to [leave a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC) to help fund the purchase of coffee, which will help facilitate future development. But that is totally optional.
