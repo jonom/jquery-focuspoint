@@ -1,6 +1,6 @@
 # jQuery FocusPoint
 
-##Intelligent cropping for flexible image containers
+## Intelligent cropping for flexible image containers
 
 Websites don't have a single layout any more. The space you have for an image may be portrait on a laptop, landscape on a tablet, and square on a mobile - particularly if you're using a full-screen image.
 
