@@ -39,8 +39,8 @@
 				return false;
 			}
 			//Which is over by more?
-			wR = imageW / containerW;
-			hR = imageH / containerH;
+			var wR = imageW / containerW;
+			var hR = imageH / containerH;
 			//Minimise image while still filling space
 			if (imageW > containerW && imageH > containerH) {
 				if (wR > hR) {
