@@ -2,7 +2,7 @@
  * jQuery FocusPoint; version: 1.0.0
  * Author: http://jonathonmenz.com
  * Source: https://github.com/jonom/jquery-focuspoint
- * Copyright (c) 2014 J. Menz; Dual licensed: MIT/GPL
+ * Copyright (c) 2014 J. Menz; MIT License
  */
 ;
 (function($) {
@@ -39,8 +39,8 @@
 				return false;
 			}
 			//Which is over by more?
-			wR = imageW / containerW;
-			hR = imageH / containerH;
+			var wR = imageW / containerW;
+			var hR = imageH / containerH;
 			//Minimise image while still filling space
 			if (imageW > containerW && imageH > containerH) {
 				if (wR > hR) {

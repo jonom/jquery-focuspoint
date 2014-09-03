@@ -1,0 +1,35 @@
+{
+  "name": "jquery-focuspoint",
+  "version": "1.0.0",
+  "homepage": "https://github.com/jonom/jquery-focuspoint",
+  "authors": [
+    "Jonathon Menz"
+  ],
+  "description": "jQuery plugin for 'responsive cropping'. Dynamically crop images to fill available space without cutting out the image's subject. Great for full-screen images.",
+  "main": [
+    "js/jquery.focuspoint.js",
+    "css/focuspoint.css"
+  ],
+  "keywords": [
+    "crop",
+    "cropping",
+    "image",
+    "responive",
+    "fill",
+    "background",
+    "full-screen",
+    "focus",
+    "focuspoint"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.9"
+  }
+}
