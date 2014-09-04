@@ -1,5 +1,5 @@
 /*!
- * jQuery FocusPoint; version: 1.0.0
+ * jQuery FocusPoint; version: 1.0.1
  * Author: http://jonathonmenz.com
  * Source: https://github.com/jonom/jquery-focuspoint
  * Copyright (c) 2014 J. Menz; MIT License
@@ -28,19 +28,43 @@
 	};
 	$.fn.adjustFocus = function() {
 		return this.each(function() {
+			//Declare variables at top of scope
+			var containerW,
+				containerH,
+				image,
+				imageW,
+				imageH,
+				wR,
+				hR,
+				hShift,
+				vShift,
+				containerCenterX,
+				focusFactorX,
+				scaledImageWidth,
+				focusX,
+				focusOffsetX,
+				xRemainder,
+				containerXRemainder,
+				containerCenterY,
+				focusFactorY,
+				scaledImageHeight,
+				focusY,
+				focusOffsetY,
+				yRemainder,
+				containerYRemainder;
 			//Adjust the focus of frame
-			var containerW = $(this).width();
-			var containerH = $(this).height();
-			var image = $(this).find('img').first();
-			var imageW = $(this).data('imageW');
-			var imageH = $(this).data('imageH');
+			containerW = $(this).width();
+			containerH = $(this).height();
+			image = $(this).find('img').first();
+			imageW = $(this).data('imageW');
+			imageH = $(this).data('imageH');
 			if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
 				//Need dimensions to proceed
 				return false;
 			}
 			//Which is over by more?
-			var wR = imageW / containerW;
-			var hR = imageH / containerH;
+			wR = imageW / containerW;
+			hR = imageH / containerH;
 			//Minimise image while still filling space
 			if (imageW > containerW && imageH > containerH) {
 				if (wR > hR) {
@@ -55,22 +79,22 @@
 				image.css('max-height', '');
 			}
 			//Amount position will be shifted
-			var hShift = 0;
-			var vShift = 0;
+			hShift = 0;
+			vShift = 0;
 			if (wR > hR) {
 				//Container center in px
-				var containerCenterX = Math.floor(containerW / 2);
+				containerCenterX = Math.floor(containerW / 2);
 				//Focus point of resize image in px
-				var focusFactorX = (Number($(this).data('focus-x')) + 1) / 2;
+				focusFactorX = (Number($(this).data('focus-x')) + 1) / 2;
 				//Can't use width() as images may be display:none
-				var scaledImageWidth = Math.floor(imageW / hR);
-				var focusX = Math.floor(focusFactorX * scaledImageWidth);
+				scaledImageWidth = Math.floor(imageW / hR);
+				focusX = Math.floor(focusFactorX * scaledImageWidth);
 				//console.log('x'+focusX);
 				//Calculate difference beetween focus point and center
-				var focusOffsetX = focusX - containerCenterX;
+				focusOffsetX = focusX - containerCenterX;
 				//Reduce offset if necessary so image remains filled
-				var xRemainder = scaledImageWidth - focusX;
-				var containerXRemainder = containerW - containerCenterX;
+				xRemainder = scaledImageWidth - focusX;
+				containerXRemainder = containerW - containerCenterX;
 				if (xRemainder < containerXRemainder) focusOffsetX -= containerXRemainder - xRemainder;
 				if (focusOffsetX < 0) focusOffsetX = 0;
 				//console.log('x'+focusOffsetX);
@@ -78,17 +102,17 @@
 				hShift = focusOffsetX * -1;
 			} else if (wR < hR) {
 				//Container center in px
-				var containerCenterY = Math.floor(containerH / 2);
+				containerCenterY = Math.floor(containerH / 2);
 				//Focus point of resize image in px
-				var focusFactorY = (Number($(this).data('focus-y')) + 1) / 2;
+				focusFactorY = (Number($(this).data('focus-y')) + 1) / 2;
 				//Can't use width() as images may be display:none
-				var scaledImageHeight = Math.floor(imageH / wR);
-				var focusY = scaledImageHeight - Math.floor(focusFactorY * scaledImageHeight);
+				scaledImageHeight = Math.floor(imageH / wR);
+				focusY = scaledImageHeight - Math.floor(focusFactorY * scaledImageHeight);
 				//Calculate difference beetween focus point and center
-				var focusOffsetY = focusY - containerCenterY;
+				focusOffsetY = focusY - containerCenterY;
 				//Reduce offset if necessary so image remains filled
-				var yRemainder = scaledImageHeight - focusY;
-				var containerYRemainder = containerH - containerCenterY;
+				yRemainder = scaledImageHeight - focusY;
+				containerYRemainder = containerH - containerCenterY;
 				if (yRemainder < containerYRemainder) focusOffsetY -= containerYRemainder - yRemainder;
 				if (focusOffsetY < 0) focusOffsetY = 0;
 				//Shift to top
