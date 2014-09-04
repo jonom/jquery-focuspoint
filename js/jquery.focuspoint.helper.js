@@ -14,7 +14,13 @@
 			var focusX = (offsetX/imageW - .5)*2;
 			var focusY = (offsetY/imageH - .5)*-2;
 			
-			window.alert('X: '+focusX.toFixed(2)+' Y: '+focusY.toFixed(2));
+			//Calculate CSS Percentages
+			var percentageX = (offsetX/imageW)*100;
+			var percentageY = (offsetY/imageH)*100;
+			var backgroundPosition = percentageX.toFixed(0) + '% ' + percentageY.toFixed(0) + '%';
+			var backgroundPositionCSS = 'background-position: ' + backgroundPosition + ';';
+			
+			window.alert('FocusX:' + focusX.toFixed(2) + ', FocusY:' + focusY.toFixed(2) + ' (For CSS version: ' + backgroundPositionCSS + ')');
 			
 		});
 		
