@@ -9,3 +9,10 @@ html,body,.focuspoint{
 	overflow: hidden;/*Prevent scrollbars in IE8*/
 	margin: 0;
 }
+a {
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: #fff;
+	padding: 5px 10px;
+}
