@@ -62,7 +62,7 @@ data-image-h="300">
 </div>
 ```
 
-Note: setting `data-image-w` and `data-image-h` is optional but recommended. Ommiting these value means your image will not be positined correctly inside the frame until it has finished loading, which may cause a visible jump.
+Note: setting `data-image-w` and `data-image-h` is optional but recommended. Omitting these value means your image will not be positioned correctly inside the frame until it has finished loading, which may cause a visible jump.
 
 #### 4. Fire FocusPoint plugin
 
