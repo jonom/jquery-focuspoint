@@ -40,40 +40,52 @@ An image's focus point is made up of x (horizontal) and y (vertical) coordinates
 
 #### 2. Include javascript and CSS
 
-You'll need to include jQuery, the FocusPoint script, and FocusPoint css file. Example:
+You'll need to include jQuery (v1.9 or greater), the FocusPoint script, and FocusPoint css file. Example:
 
-	<link rel="stylesheet" href="focuspoint.css">
-	<script src="jquery.js"></script>
-	<script src="focuspoint.js"></script>
-	
-#### 3. Mark up image container
+```html
+<link rel="stylesheet" href="focuspoint.css">
+<script src="jquery.js"></script>
+<script src="focuspoint.js"></script>
+```
 
-Specify the image dimensions and focus point coordinates on the image container. Note: I know it shouldn't really be necessary to specify image dimensions but I've found this to be more reliable than reading the dimensions from the image. Example:
+#### 3. Mark up your image container
 
-	<div class="focuspoint"
-	data-focus-x="0.331"
-	data-focus-y="-0.224"
-	data-image-w="400"
-	data-image-h="300">
-		<img src="image.jpg" alt="" />
-	</div>
+Specify the image dimensions and focus point coordinates on the image container. The image will take up whatever space is available in the container, so make sure there is some space to fill by setting a height for the container in your CSS. Example:
+
+```html
+<div class="focuspoint"
+data-focus-x="0.331"
+data-focus-y="-0.224"
+data-image-w="400"
+data-image-h="300">
+	<img src="image.jpg" alt="" />
+</div>
+```
+
+Note: setting `data-image-w` and `data-image-h` is optional but recommended. Ommiting these value means your image will not be positined correctly inside the frame until it has finished loading, which may cause a visible jump.
 
 #### 4. Fire FocusPoint plugin
 
 Usually the best place for this will be inside your `$(document).ready()` function.
 
-	//Fire plugin
-	$('.focuspoint').focusPoint();
+```javascript
+//Fire plugin
+$('.focuspoint').focusPoint();
+```
 
 There aren't many configuration options available at the moment, but if you want to you can prevent images being re-focused when the window is resized like so:
 
-	$('.focuspoint').focusPoint({
-		reCalcOnWindowResize : false
-	});
-	
+```javascript
+$('.focuspoint').focusPoint({
+	reCalcOnWindowResize : false
+});
+```
+
 You can re-focus images at any time with `adjustFocus()`. This recalculates where the image should be positioned in the frame. An example where you may need to do this is if you are using FocusPoint images within a slider. FocusPoint can't do it's calculations properly if an image container is hidden (as it won't have any dimensions), so you should trigger `adjustFocus()` on the target container as soon as it becomes visible. Example:
 
-	$('.focuspoint').adjustFocus()
+```javascript
+$('.focuspoint').adjustFocus()
+```
 
 ## Tips & Tricks
 
@@ -97,3 +109,11 @@ Nothing would encourage me to keep updating this script more than hearing how it
 **Feeling generous?**  
 If FocusPoint helped you impress a client and you want to say thanks, you're welcome to [leave a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC) to help fund the purchase of coffee, which will help facilitate future development. But that is totally optional.
 
+## Changelog
+
+#### v1.0.2 2014-09-05
+Made setting image width and height on shell optional (thanks @luruke)
+#### v1.0.1 2014-09-04
+Cleaned up variables
+#### v1.0.0 2014-08-19
+Initial release
