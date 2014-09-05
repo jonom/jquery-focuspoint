@@ -50,7 +50,7 @@ You'll need to include jQuery (v1.9 or greater), the FocusPoint script, and Focu
 
 #### 3. Mark up your image container
 
-Specify the image dimensions and focus point coordinates on the image container. The image will take up whatever space is available in the container, so make sure there is some space to fill by setting a height for the container in your CSS. Note: I know it shouldn't really be necessary to specify image dimensions but I've found this to be more reliable than reading the dimensions from the image. Example:
+Specify the image dimensions and focus point coordinates on the image container. The image will take up whatever space is available in the container, so make sure there is some space to fill by setting a height for the container in your CSS. Example:
 
 ```html
 <div class="focuspoint"
@@ -61,6 +61,8 @@ data-image-h="300">
 	<img src="image.jpg" alt="" />
 </div>
 ```
+
+Note: setting `data-image-w` and `data-image-h` is optional but recommended. Ommiting these value means your image will not be positined correctly inside the frame until it has finished loading, which may cause a visible jump.
 
 #### 4. Fire FocusPoint plugin
 
@@ -109,6 +111,8 @@ If FocusPoint helped you impress a client and you want to say thanks, you're wel
 
 ## Changelog
 
+#### v1.0.2 2014-09-05
+Made setting image width and height on shell optional
 #### v1.0.1 2014-09-04
 Cleaned up variables
 #### v1.0.0 2014-08-19

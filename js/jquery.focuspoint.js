@@ -1,14 +1,15 @@
-/*!
- * jQuery FocusPoint; version: 1.0.1
+/**
+ * jQuery FocusPoint; version: 1.0.2
  * Author: http://jonathonmenz.com
  * Source: https://github.com/jonom/jquery-focuspoint
  * Copyright (c) 2014 J. Menz; MIT License
+ * @preserve
  */
 ;
 (function($) {
 	$.fn.focusPoint = function(options) {
 		var settings = $.extend({
-			// These are the defaults.
+			//These are the defaults.
 			reCalcOnWindowResize: true
 		}, options);
 		return this.each(function() {
@@ -34,6 +35,8 @@
 				image,
 				imageW,
 				imageH,
+				self,
+				imageTmp,
 				wR,
 				hR,
 				hShift,
@@ -52,31 +55,24 @@
 				focusOffsetY,
 				yRemainder,
 				containerYRemainder;
-			//Adjust the focus of frame
+			//Collect dimensions
 			containerW = $(this).width();
 			containerH = $(this).height();
 			image = $(this).find('img').first();
 			imageW = $(this).data('imageW');
 			imageH = $(this).data('imageH');
-
+			//Get image dimensions if not set on container
 			if (!imageW || !imageH) {
-				var self = this,
-					imageTmp = new Image();
-
+				self = this;
+				imageTmp = new Image();
 				imageTmp.onload = function(){
-					
 					$(self).data('imageW', this.width);
 					$(self).data('imageH', this.height);
-
-					$(self).adjustFocus();
+					$(self).adjustFocus(); //adjust once image is loaded - may cause a visible jump
 				};
-
 				imageTmp.src = image.attr('src');
-
-				return false;
+				return false; //Don't proceed right now, will try again once image has loaded
 			}
-
-
 			if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
 				//Need dimensions to proceed
 				return false;
@@ -108,15 +104,17 @@
 				//Can't use width() as images may be display:none
 				scaledImageWidth = Math.floor(imageW / hR);
 				focusX = Math.floor(focusFactorX * scaledImageWidth);
-				//console.log('x'+focusX);
 				//Calculate difference beetween focus point and center
 				focusOffsetX = focusX - containerCenterX;
 				//Reduce offset if necessary so image remains filled
 				xRemainder = scaledImageWidth - focusX;
 				containerXRemainder = containerW - containerCenterX;
-				if (xRemainder < containerXRemainder) focusOffsetX -= containerXRemainder - xRemainder;
-				if (focusOffsetX < 0) focusOffsetX = 0;
-				//console.log('x'+focusOffsetX);
+				if (xRemainder < containerXRemainder){
+					focusOffsetX -= containerXRemainder - xRemainder;
+				}
+				if (focusOffsetX < 0) {
+					focusOffsetX = 0;
+				}
 				//Shift to left
 				hShift = focusOffsetX * -1;
 			} else if (wR < hR) {
@@ -132,8 +130,12 @@
 				//Reduce offset if necessary so image remains filled
 				yRemainder = scaledImageHeight - focusY;
 				containerYRemainder = containerH - containerCenterY;
-				if (yRemainder < containerYRemainder) focusOffsetY -= containerYRemainder - yRemainder;
-				if (focusOffsetY < 0) focusOffsetY = 0;
+				if (yRemainder < containerYRemainder) {
+					focusOffsetY -= containerYRemainder - yRemainder;
+				}
+				if (focusOffsetY < 0) {
+					focusOffsetY = 0;
+				}
 				//Shift to top
 				vShift = focusOffsetY * -1;
 			}
