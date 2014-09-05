@@ -112,7 +112,7 @@ If FocusPoint helped you impress a client and you want to say thanks, you're wel
 ## Changelog
 
 #### v1.0.2 2014-09-05
-Made setting image width and height on shell optional
+Made setting image width and height on shell optional (thanks @luruke)
 #### v1.0.1 2014-09-04
 Cleaned up variables
 #### v1.0.0 2014-08-19
