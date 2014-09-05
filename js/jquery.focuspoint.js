@@ -58,6 +58,25 @@
 			image = $(this).find('img').first();
 			imageW = $(this).data('imageW');
 			imageH = $(this).data('imageH');
+
+			if (!imageW || !imageH) {
+				var self = this,
+					imageTmp = new Image();
+
+				imageTmp.onload = function(){
+					
+					$(self).data('imageW', this.width);
+					$(self).data('imageH', this.height);
+
+					$(self).adjustFocus();
+				};
+
+				imageTmp.src = image.attr('src');
+
+				return false;
+			}
+
+
 			if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
 				//Need dimensions to proceed
 				return false;
