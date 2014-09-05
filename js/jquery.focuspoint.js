@@ -1,5 +1,5 @@
 /**
- * jQuery FocusPoint; version: 1.0.2
+ * jQuery FocusPoint; version: 1.0.3
  * Author: http://jonathonmenz.com
  * Source: https://github.com/jonom/jquery-focuspoint
  * Copyright (c) 2014 J. Menz; MIT License
@@ -10,11 +10,12 @@
 	$.fn.focusPoint = function(options) {
 		var settings = $.extend({
 			//These are the defaults.
-			reCalcOnWindowResize: true
+			reCalcOnWindowResize: true,
+			throttleDuration: 17 //ms - set to 0 to disable throttling
 		}, options);
 		return this.each(function() {
 			//Initial adjustments
-			var container = $(this);
+			var container = $(this), isThrottled = false;
 			//Replace basic css positioning with more accurate version
 			container.removeClass('focus-left-top focus-left-center focus-left-bottom focus-center-top focus-center-center focus-center-bottom focus-right-top focus-right-center focus-right-bottom');
 			//Focus image in container
@@ -22,6 +23,15 @@
 			if (settings.reCalcOnWindowResize) {
 				//Recalculate each time the window is resized
 				$(window).resize(function() {
+					//Throttle redraws
+					if (settings.throttleDuration > 0){
+				    if (isThrottled) { return; }
+				    isThrottled = true;
+				    setTimeout(function () {
+				    	isThrottled = false;
+				    	container.adjustFocus();
+				    }, settings.throttleDuration);
+			    }
 					container.adjustFocus();
 				});
 			}

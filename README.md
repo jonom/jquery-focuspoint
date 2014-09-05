@@ -73,13 +73,33 @@ Usually the best place for this will be inside your `$(document).ready()` functi
 $('.focuspoint').focusPoint();
 ```
 
-There aren't many configuration options available at the moment, but if you want to you can prevent images being re-focused when the window is resized like so:
+That's it!
+
+#### Configuration options
+
+By default images are re-focused when the window is resized. You can disable this like so:
 
 ```javascript
 $('.focuspoint').focusPoint({
 	reCalcOnWindowResize : false
 });
 ```
+
+You can also change how often images are re-focused during window resizing:
+
+```javascript
+//Re-focus images at most once every 100ms
+$('.focuspoint').focusPoint({
+	throttleDuration: 100
+});
+
+//Disable throttling
+$('.focuspoint').focusPoint({
+	throttleDuration: 0
+});
+```
+
+#### Other functions
 
 You can re-focus images at any time with `adjustFocus()`. This recalculates where the image should be positioned in the frame. An example where you may need to do this is if you are using FocusPoint images within a slider. FocusPoint can't do it's calculations properly if an image container is hidden (as it won't have any dimensions), so you should trigger `adjustFocus()` on the target container as soon as it becomes visible. Example:
 
@@ -111,6 +131,8 @@ If FocusPoint helped you impress a client and you want to say thanks, you're wel
 
 ## Changelog
 
+#### v1.0.3 2014-09-06
+Throttled window resize updates
 #### v1.0.2 2014-09-05
 Made setting image width and height on shell optional (thanks @luruke)
 #### v1.0.1 2014-09-04
