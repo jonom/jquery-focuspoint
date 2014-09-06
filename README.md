@@ -36,7 +36,7 @@ An image's focus point is made up of x (horizontal) and y (vertical) coordinates
 
 ![image](demos/img/grid.png?raw=true)
 
-**Confused?** Don't worry, there's a handy script included to help you find the focus coordinates of an image with a single click (vastly improved courtesy of [https://github.com/auginator](@auginator)). [See an example here](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html).
+**Confused?** Don't worry, there's a handy script included to help you find the focus coordinates of an image with a single click (vastly improved courtesy of [@auginator](https://github.com/auginator)). [See an example here](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html).
 
 #### 2. Include javascript and CSS
 
