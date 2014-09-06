@@ -1,0 +1,64 @@
+
+/* !HELPER TOOL GUI */
+/*-----------------------------------------*/
+#Info {
+	width:320px;
+}
+#Info .helper-tool h1 {
+	font-size:14px;
+}
+#Info .helper-tool p {
+	font-size: 0.825rem;
+	padding:0;
+	margin:0 0 1em;
+}
+.helper-tool, .helper-tool * {
+	box-sizing:border-box;
+}
+.helper-tool {
+	padding:12px;
+	border:1px solid #fcfcfc;
+}
+.helper-tool input {
+	position:relative;
+	width:100%;
+}
+
+/* !HELPER TOOL TARGETING SYSTEM */
+.focuspoint img {
+  transition: all 500ms ease-in-out;
+  -webkit-transition: all 500ms ease-in-out;
+  -moz-transition: all 500ms ease-in-out;
+}
+
+/* !HELPER TOOL TARGETING SYSTEM */
+.helper-tool-target {
+  position: relative;
+  width: 300px;
+  overflow: hidden;
+  margin-bottom:1em;
+}
+.helper-tool-target img {
+  display: block;
+  max-width: 100%;
+  height:auto;
+}
+.helper-tool-target img.target-overlay, .helper-tool-target img.reticle {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.helper-tool-target img.target-overlay {
+  cursor:pointer;
+  opacity: 0.01;
+}
+.helper-tool-target img.reticle {
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  top:50%;
+  left:50%;
+  transition: all 500ms ease-in-out;
+  -webkit-transition: all 500ms ease-in-out;
+  -moz-transition: all 500ms ease-in-out;
+}
