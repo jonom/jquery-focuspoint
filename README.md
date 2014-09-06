@@ -36,7 +36,7 @@ An image's focus point is made up of x (horizontal) and y (vertical) coordinates
 
 ![image](demos/img/grid.png?raw=true)
 
-**Confused?** Don't worry, there's a handy script included to help you find the focus coordinates of an image with a single click (vastly improved courtesy of [@auginator](https://github.com/auginator)). [See an example here](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html).
+**Confused?** Don't worry, there's a handy script included to help you find the focus coordinates of an image with a single click. Check out the [helper tool](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) *(vastly improved courtesy of [@auginator](https://github.com/auginator)).*
 
 #### 2. Include javascript and CSS
 
@@ -116,7 +116,8 @@ In order for this concept of 'fluid cropping' to work well, your images will nee
 
 You can get a similar effect to this technique using only CSS and the `background-position` and `background-size` properties. Browser support isn't as good (at the moment) and your image won't be positioned exactly the same way - but it's pretty close. The CSS technique leans towards preserving the original composition while FocusPoint is biased towards keeping the subject of the image in the centre of the frame. Depending on your requirements either technique may suit you better.
 
-[Pure CSS Example and comparison](http://jonom.github.io/jquery-focuspoint/demos/css-js-comparison/index.html)
+* [Pure CSS example and comparison](http://jonom.github.io/jquery-focuspoint/demos/css-js-comparison/index.html)
+* [Helper tool for calculating CSS values](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html)
 
 #### SilverStripe CMS integration
 
@@ -126,7 +127,8 @@ This plugin plays really well with the [silverstripe-focuspoint](https://github.
 
 Nothing would encourage me to keep updating this script more than hearing how it's been used in the real world. Get in touch with me at [jonathonmenz.com](http://jonathonmenz.com) to let me know how you've used this plugin or any suggestions you have for improving it. Please [report bugs or issues on github](https://github.com/jonom/jquery-focuspoint/issues).
 
-**Feeling generous?**  
+#### Feeling generous?
+
 If FocusPoint helped you impress a client and you want to say thanks, you're welcome to [leave a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC) to help fund the purchase of coffee, which will help facilitate future development. But that is totally optional.
 
 ## Changelog
