@@ -4,18 +4,54 @@
 	
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>FocusPoint Example</title>
+		<title>FocusPoint Helper Tool</title>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+		<!-- REQUIRED STYLES -->
+		<link rel="stylesheet" type="text/css" href="../../css/focuspoint.css">
 		
+		<!-- DEMO STYLES -->
+		<link rel="stylesheet" type="text/css" href="../demo.css">
+		<link rel="stylesheet" type="text/css" href="../grid/grid.css">
+		<link rel="stylesheet" type="text/css" href="helper-tool.css">
+
+		<!-- REQUIRED SCRIPTS -->
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
-		<script type="text/javascript" src="../../js/jquery.focuspoint.helper.js"></script>
-		
+		<script type="text/javascript" src="../../js/jquery.focuspoint.js"></script>
+
+		<!-- DEMO SCRIPTS -->
+		<script type="text/javascript" src="../../js/jquery.focuspoint.helpertool.js"></script>
+
 	</head>
 	<body>
-	
-	<p>Click the image to see coordinates for the point you clicked.</p>
-	
-	<img src="../img/lizard.jpg" alt="" />
-	
+
+		<div id="Frames">		
+		</div>
+		
+		<div id="Info">
+			<div class="helper-tool">
+				<h1>Click the image to set the FocusPoint.</h1>
+				<!-- <img class="focus-target-reticle" src='../img/focuspoint-target.png' /> -->
+				<div class="helper-tool-target">
+					<img class="helper-tool-img">
+					<img class="reticle" src="../img/focuspoint-target.png">
+					<img class="target-overlay">
+				</div>
+				<p>
+					<label for="set-src">Paste in a URL to change the image</label>
+					<input name="set-src" id="set-src" class='helper-tool-set-src' type='text'>
+				</p>
+				<p>
+					<label for="data-attr">FocusPoint data- attributes:</label>
+					<input class='helper-tool-data-attr' id="data-attr" name="data-attr" type='text' placeholder='data-focus-x="0" data-focus-y="0" '>	
+				</p>
+				<p>
+					<label for="css3-val">CSS3 Background Position:</label>
+					<input class='helper-tool-css3-val' id="css3-val" name="css3-val" type='text' placeholder='background-position:'>	
+				</p>
+				<p><a href="https://github.com/jonom/jquery-focuspoint">» Project Home</a></p>
+			</div><!-- End Helper Tool -->
+		</div>
+
 	</body>
 </html>
