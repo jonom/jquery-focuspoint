@@ -17,7 +17,7 @@
 				w: 0,
 				h: 0
 			}; 
-		var animationSpeed = 3; // This is used to control how long the tweens will take
+		var animationSpeed = 2; // This is used to control how long the tweens will take
 
 		//Initialize Helper Tool
 		(function() {
@@ -102,7 +102,7 @@
 		/*-----------------------------------------*/
 		
 		function printDataAttr(){
-			$dataAttrInput.val('data-focus-x="'+focusPointAttr.x+'" data-focus-y="'+focusPointAttr.y+'" data-focus-w="'+focusPointAttr.w+'" data-focus-h="'+focusPointAttr.h+'"');
+			$dataAttrInput.val('data-focus-x="'+focusPointAttr.x.toFixed(2)+'" data-focus-y="'+focusPointAttr.y.toFixed(2)+'" data-focus-w="'+focusPointAttr.w+'" data-focus-h="'+focusPointAttr.h+'"');
 		}
 
 		/*-----------------------------------------*/
@@ -122,8 +122,8 @@
 			var offsetY = e.pageY - $(this).offset().top;
 			var focusX = (offsetX/imageW - .5)*2;
 			var focusY = (offsetY/imageH - .5)*-2;
-			focusPointAttr.x = focusX.toFixed(2);
-			focusPointAttr.y = focusY.toFixed(2);
+			focusPointAttr.x = focusX;
+			focusPointAttr.y = focusY;
 
 			//Write values to input
 			printDataAttr();
