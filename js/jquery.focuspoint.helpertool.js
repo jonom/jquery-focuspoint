@@ -17,10 +17,10 @@
 				w: 0,
 				h: 0
 			}; 
-		var animationSpeed = 2; // This is used to control how long the tweens will take
 
 		//Initialize Helper Tool
 		(function() {
+
 			//Initialize Variables
 			defaultImage = '../img/city_from_unsplash.jpg';
 			$dataAttrInput = $('.helper-tool-data-attr');
@@ -34,11 +34,10 @@
 			//Store focus point containers
 			$focusPointContainers = $('.focuspoint');
 			$focusPointImages = $('.focuspoint img');
+
 			//Set the default source image
 			setImage( defaultImage );
 
-			//Make sure our reticle is positioned how we want with GSAP
-			//TweenLite.set($('.reticle'), {top:"50%",left:"50%"});
 		})();
 		
 		/*-----------------------------------------*/
@@ -162,8 +161,8 @@
 
 		/*-----------------------------------------*/
 
-		/* GSAP Update Helper */
-		// This function is used to update the focuspoint on GSAP's update event
+		/* Update Helper */
+		// This function is used to update the focuspoint 
 
 		/*-----------------------------------------*/
 		
