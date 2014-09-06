@@ -38,7 +38,7 @@
 			setImage( defaultImage );
 
 			//Make sure our reticle is positioned how we want with GSAP
-			TweenLite.set($('.reticle'), {top:"50%",left:"50%"});
+			//TweenLite.set($('.reticle'), {top:"50%",left:"50%"});
 		})();
 		
 		/*-----------------------------------------*/
@@ -128,9 +128,9 @@
 			//Write values to input
 			printDataAttr();
 
-			//Use GSAP to Tween to the new FocusPoint
-			TweenLite.to(focusPointAttr, animationSpeed, {x:focusX, y:focusY, ease:Quad.easeInOut, onUpdate:updateFocusPoint})
-			
+			//Update focus point
+			updateFocusPoint();
+
 			//Calculate CSS Percentages
 			var percentageX = (offsetX/imageW)*100;
 			var percentageY = (offsetY/imageH)*100;
@@ -139,12 +139,10 @@
 			$cssAttrInput.val(backgroundPositionCSS);
 
 			//Leave a sweet target reticle at the focus point.
-			var cssPosition = { 
+			$('.reticle').css({ 
 				'top':percentageY+'%',
-				'left':percentageX+'%',
-				ease:Quad.easeInOut
-			};
-			TweenLite.to($('.reticle'), animationSpeed/2, cssPosition)
+				'left':percentageX+'%'
+			});
 		});
 		
 		/*-----------------------------------------*/

@@ -23,6 +23,14 @@
 	position:relative;
 	width:100%;
 }
+
+/* !HELPER TOOL TARGETING SYSTEM */
+.focuspoint img {
+  transition: all 500ms ease-in;
+  -webkit-transition: all 500ms ease-in;
+  -moz-transition: all 500ms ease-in;
+}
+
 /* !HELPER TOOL TARGETING SYSTEM */
 .helper-tool-target {
   position: relative;
@@ -50,4 +58,7 @@
   transform: translate(-50%, -50%);
   top:50%;
   left:50%;
+  transition: all 500ms ease-in;
+  -webkit-transition: all 500ms ease-in;
+  -moz-transition: all 500ms ease-in;
 }
