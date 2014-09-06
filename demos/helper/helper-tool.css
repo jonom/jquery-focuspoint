@@ -26,9 +26,9 @@
 
 /* !HELPER TOOL TARGETING SYSTEM */
 .focuspoint img {
-  transition: all 500ms ease-in;
-  -webkit-transition: all 500ms ease-in;
-  -moz-transition: all 500ms ease-in;
+  transition: all 500ms ease-in-out;
+  -webkit-transition: all 500ms ease-in-out;
+  -moz-transition: all 500ms ease-in-out;
 }
 
 /* !HELPER TOOL TARGETING SYSTEM */
