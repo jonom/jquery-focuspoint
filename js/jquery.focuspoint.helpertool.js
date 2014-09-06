@@ -1,62 +1,117 @@
-//Get focus point coordinates from an image - adapt to suit your needs.
+// Gets focus point coordinates from an image - adapt to suit your needs.
 
 (function($) {
 	$(document).ready(function() {
 		
-		var img = ['../img/kangaroo.jpg'];
-		var $dataAttrInput = $('.helper-tool-data-attr');
-		var $cssAttrInput = $('.helper-tool-css3-val');
-		
+		var defaultImage;
+		var $dataAttrInput;
+		var $cssAttrInput;
 		var $focusPointContainers;
 		var $focusPointImages;
-		var $helperToolImage = $('img.helper-tool-img, img.target-overlay');
+		var $helperToolImage;
 
 		//This stores focusPoint's data-attribute values
 		var focusPointAttr = {
-				fX: 0,
-				fY: 0,
-				fW: 0,
-				fH: 0
+				x: 0,
+				y: 0,
+				w: 0,
+				h: 0
 			}; 
+		var animationSpeed = 3; // This is used to control how long the tweens will take
 
 		//Initialize Helper Tool
 		(function() {
+			//Initialize Variables
+			defaultImage = '../img/city_from_unsplash.jpg';
+			$dataAttrInput = $('.helper-tool-data-attr');
+			$cssAttrInput = $('.helper-tool-css3-val');
+			$helperToolImage = $('img.helper-tool-img, img.target-overlay');
+
+			//Create Grid Elements
 			for(var i = 1; i < 10; i++) {
 				$('#Frames').append('<div id="Frame'+i+'" class="focuspoint"><img/></div>');
 			}
+			//Store focus point containers
 			$focusPointContainers = $('.focuspoint');
 			$focusPointImages = $('.focuspoint img');
-			setImage(img[0]);
+			//Set the default source image
+			setImage( defaultImage );
+
+			//Make sure our reticle is positioned how we want with GSAP
+			TweenLite.set($('.reticle'), {top:"50%",left:"50%"});
 		})();
 		
+		/*-----------------------------------------*/
+
+		// function setImage(<URL>)
+		// Set a new image to use in the demo, requires URI to an image
+		
+		/*-----------------------------------------*/
+
 		function setImage(imgURL) {
 			//Get the dimensions of the image by referencing an image stored in memory
 			$("<img/>") 
 				.attr("src", imgURL)
 				.load(function() {
-					focusPointAttr.fW = this.width;   // Note: $(this).width() will not
-					focusPointAttr.fH = this.height; // work for in memory images.
-					//Set the thumbnail used in the GUI
+					focusPointAttr.w = this.width;  
+					focusPointAttr.h = this.height;
+					
+					//Set src on the thumbnail used in the GUI
 					$helperToolImage.attr('src', imgURL);
-					//Create all images
+					
+					//Set src on all .focuspoint images
 					$focusPointImages.attr('src', imgURL);
-					//Set up containers
+					
+					//Set up initial properties of .focuspoint containers
+
+					/*-----------------------------------------*/
+					// Note ---
+					// Setting these up with attr doesn't really make a difference
+					// added to demo only so changes are made visually in the dom 
+					// for users inspecting it. Because of how FocusPoint uses .data()
+					// only the .data() assignments that follow are necessary.
+					/*-----------------------------------------*/
 					$focusPointContainers.attr({
-						'data-focus-x':focusPointAttr.fX,
-						'data-focus-y':focusPointAttr.fY,
-						'data-image-w': focusPointAttr.fW,
-						'data-image-h': focusPointAttr.fH
+						'data-focus-x':focusPointAttr.x,
+						'data-focus-y':focusPointAttr.y,
+						'data-image-w': focusPointAttr.w,
+						'data-image-h': focusPointAttr.h
 					});
-					$focusPointContainers.data('focusX', focusPointAttr.fX);
-					$focusPointContainers.data('focusY', focusPointAttr.fY);
-					$focusPointContainers.data('imageW', focusPointAttr.fW);
-					$focusPointContainers.data('imageH', focusPointAttr.fH);
-					//Run FocusPoint
+
+					/*-----------------------------------------*/
+					// These assignments using .data() are what counts.
+					/*-----------------------------------------*/
+					$focusPointContainers.data('focusX', focusPointAttr.x);
+					$focusPointContainers.data('focusY', focusPointAttr.y);
+					$focusPointContainers.data('imageW', focusPointAttr.w);
+					$focusPointContainers.data('imageH', focusPointAttr.h);
+					
+					//Run FocusPoint for the first time.
 					$('.focuspoint').focusPoint();
+
+					//Update the data attributes shown to the user
+					printDataAttr();
+
 				});
 		}
 
-		// Adjust focus on Click
+		/*-----------------------------------------*/
+
+		// Update the data attributes shown to the user
+
+		/*-----------------------------------------*/
+		
+		function printDataAttr(){
+			$dataAttrInput.val('data-focus-x="'+focusPointAttr.x+'" data-focus-y="'+focusPointAttr.y+'" data-focus-w="'+focusPointAttr.w+'" data-focus-h="'+focusPointAttr.h+'"');
+		}
+
+		/*-----------------------------------------*/
+
+		// Bind to helper image click event
+		// Adjust focus on Click / provides focuspoint and CSS3 properties
+		
+		/*-----------------------------------------*/
+
 		$helperToolImage.click(function(e){
 		
 			var imageW = $(this).width();
@@ -67,12 +122,14 @@
 			var offsetY = e.pageY - $(this).offset().top;
 			var focusX = (offsetX/imageW - .5)*2;
 			var focusY = (offsetY/imageH - .5)*-2;
-			focusPointAttr.fX = focusX.toFixed(2);
-			focusPointAttr.fY = focusY.toFixed(2);
+			focusPointAttr.x = focusX.toFixed(2);
+			focusPointAttr.y = focusY.toFixed(2);
 
-			$dataAttrInput.val('data-focus-x="'+focusPointAttr.fX+'" data-focus-y="'+focusPointAttr.fY+'" data-focus-w="'+focusPointAttr.fW+'" data-focus-h="'+focusPointAttr.fH+'"');
+			//Write values to input
+			printDataAttr();
 
-			TweenLite.to(focusPointAttr, 1, {fX:focusX, fY:focusY, onUpdate:onGSAPUpdate})
+			//Use GSAP to Tween to the new FocusPoint
+			TweenLite.to(focusPointAttr, animationSpeed, {x:focusX, y:focusY, ease:Quad.easeInOut, onUpdate:updateFocusPoint})
 			
 			//Calculate CSS Percentages
 			var percentageX = (offsetX/imageW)*100;
@@ -82,15 +139,21 @@
 			$cssAttrInput.val(backgroundPositionCSS);
 
 			//Leave a sweet target reticle at the focus point.
-			var cssPosition = {
+			var cssPosition = { 
 				'top':percentageY+'%',
-				'left':percentageX+'%'
+				'left':percentageX+'%',
+				ease:Quad.easeInOut
 			};
-			//$('.reticle').css(cssPosition);
-			TweenLite.to($('.reticle'), 1, cssPosition)
+			TweenLite.to($('.reticle'), animationSpeed/2, cssPosition)
 		});
 		
-		//Change image on paste/type
+		/*-----------------------------------------*/
+
+		// Change image on paste/blur
+		// When you paste an image into the specified input, it will be used for the demo
+
+		/*-----------------------------------------*/
+		
 		$('input.helper-tool-set-src').on('paste blur', function(e){
 		  var element = this;
 		  setTimeout(function () {
@@ -99,15 +162,28 @@
 		  }, 100);
 		});
 
+		/*-----------------------------------------*/
+
 		/* GSAP Update Helper */
-		function onGSAPUpdate(){
+		// This function is used to update the focuspoint on GSAP's update event
+
+		/*-----------------------------------------*/
+		
+		function updateFocusPoint(){
+			/*-----------------------------------------*/
+			// See note in setImage() function regarding these attribute assignments.
+			//TLDR - You don't need them for this to work.
+			/*-----------------------------------------*/
 			$focusPointContainers.attr({
-				'data-focus-x': focusPointAttr.fX,
-				'data-focus-y': focusPointAttr.fY
+				'data-focus-x': focusPointAttr.x,
+				'data-focus-y': focusPointAttr.y
 			});			
-			$focusPointContainers.data('focusX', focusPointAttr.fX);
-			$focusPointContainers.data('focusY', focusPointAttr.fY);
-			$('.focuspoint').adjustFocus();
+			/*-----------------------------------------*/
+			// These you DO need :)
+			/*-----------------------------------------*/
+			$focusPointContainers.data('focusX', focusPointAttr.x);
+			$focusPointContainers.data('focusY', focusPointAttr.y);
+			$focusPointContainers.adjustFocus();
 		};
 	});
 }(jQuery));

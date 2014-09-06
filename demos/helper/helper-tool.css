@@ -4,22 +4,20 @@
 #Info {
 	width:320px;
 }
-#Info .helper-tool *{
+#Info .helper-tool h1 {
+	font-size:14px;
+}
+#Info .helper-tool p {
 	font-size: 0.825rem;
+	padding:0;
+	margin:0 0 1em;
 }
 .helper-tool, .helper-tool * {
 	box-sizing:border-box;
 }
 .helper-tool {
-	padding:10px;
-	background:white;
-/*	position:fixed;
-	top:0;
-	left:0;*/
-	border:1px solid #efefef;
-}
-.helper-tool p {
-		
+	padding:12px;
+	border:1px solid #fcfcfc;
 }
 .helper-tool input {
 	position:relative;
@@ -28,9 +26,9 @@
 /* !HELPER TOOL TARGETING SYSTEM */
 .helper-tool-target {
   position: relative;
-  border: 3px solid orange;
   width: 300px;
   overflow: hidden;
+  margin-bottom:1em;
 }
 .helper-tool-target img {
   display: block;
