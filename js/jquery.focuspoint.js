@@ -8,6 +8,13 @@
 ;
 (function($) {
 
+	// fallback css classes
+	var focusCssClasses = [
+		'focus-left-top', 'focus-left-center', 'focus-left-bottom',
+		'focus-center-top', 'focus-center-center', 'focus-center-bottom',
+		'focus-right-top', 'focus-right-center', 'focus-right-bottom'
+	];
+
 	$.fn.focusPoint = function(options) {
 		var settings = $.extend({
 			//These are the defaults.
@@ -16,19 +23,22 @@
 		}, options);
 		return this.each(function() {
 			//Initial adjustments
-			var container = $(this);
-			var debouncedAdjustFocus = debounce($.proxy(container.adjustFocus, container), settings.throttleDuration);
+			var $container = $(this);
+			var debouncedAdjustFocus = debounce($.proxy($container.adjustFocus, $container), settings.throttleDuration);
 
 			//Replace basic css positioning with more accurate version
-			container.removeClass('focus-left-top focus-left-center focus-left-bottom focus-center-top focus-center-center focus-center-bottom focus-right-top focus-right-center focus-right-bottom');
+			$container.removeClass(focusCssClasses.join(' '));
+
 			//Focus image in container
-			container.adjustFocus();
+			$container.adjustFocus();
+
 			if (settings.reCalcOnWindowResize) {
 				//Recalculate each time the window is resized
 				$(window).resize(debouncedAdjustFocus);
 			}
 		});
 	};
+
 	$.fn.adjustFocus = function() {
 		return this.each(function() {
 			//Declare variables at top of scope
