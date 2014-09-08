@@ -7,6 +7,7 @@
  */
 ;
 (function($) {
+
 	$.fn.focusPoint = function(options) {
 		var settings = $.extend({
 			//These are the defaults.
@@ -15,25 +16,16 @@
 		}, options);
 		return this.each(function() {
 			//Initial adjustments
-			var container = $(this), isThrottled = false;
+			var container = $(this);
+			var debouncedAdjustFocus = debounce($.proxy(container.adjustFocus, container), settings.throttleDuration);
+
 			//Replace basic css positioning with more accurate version
 			container.removeClass('focus-left-top focus-left-center focus-left-bottom focus-center-top focus-center-center focus-center-bottom focus-right-top focus-right-center focus-right-bottom');
 			//Focus image in container
 			container.adjustFocus();
 			if (settings.reCalcOnWindowResize) {
 				//Recalculate each time the window is resized
-				$(window).resize(function() {
-					//Throttle redraws
-					if (settings.throttleDuration > 0){
-				    if (isThrottled) { return; }
-				    isThrottled = true;
-				    setTimeout(function () {
-				    	isThrottled = false;
-				    	container.adjustFocus();
-				    }, settings.throttleDuration);
-			    }
-					container.adjustFocus();
-				});
+				$(window).resize(debouncedAdjustFocus);
 			}
 		});
 	};
@@ -153,4 +145,17 @@
 			image.css('top', vShift + 'px');
 		});
 	};
+
+	// helper functions
+	var debounce = function(fn, ms) {
+		var timer;
+		return function() {
+			var args = Array.prototype.slice.call(arguments, 0);
+			if (timer) clearTimeout(timer);
+			timer = setTimeout(function() {
+				fn.apply(null, args);
+			}, ms);
+		};
+	};
+
 })(jQuery);
