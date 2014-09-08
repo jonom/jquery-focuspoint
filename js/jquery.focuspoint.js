@@ -125,8 +125,8 @@
 		}
 
 		$image.css({
-			top: vShift + 'px',
-			left: hShift + 'px'
+			top: vShift,
+			left: hShift
 		});
 	};
 
