@@ -115,11 +115,7 @@
 
 		//Minimize image while still filling space
 		if (imageW > containerW && imageH > containerH) {
-			if (wR > hR) {
-				$image.css('max-height', '100%');
-			} else {
-				$image.css('max-width', '100%');
-			}
+			$image.css((wR > hR) ? 'max-height' : 'max-width', '100%');
 		}
 
 		if (wR > hR) {
