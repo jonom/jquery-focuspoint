@@ -148,7 +148,7 @@
 
 			if (settings.reCalcOnWindowResize) {
 				//Recalculate each time the window is resized
-        $window.on('resize', debAdjustFocus);
+				$window.on('resize', debAdjustFocus);
 			}
 		});
 	};
