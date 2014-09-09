@@ -132,23 +132,48 @@
 		});
 	};
 
-	$.fn.focusPoint = function(options) {
-		var settings = $.extend({}, defaults, options);
+	var $window = $(window);
 
-		return this.each(function() {
-			//Initial adjustments
-			var $el = $(this);
-			var $window = $(window);
-			var thrAdjustFocus = throttle($.proxy($el.adjustFocus, $el), settings.throttleDuration);
+	var focusPoint = function($el, settings) {
+		var thrAdjustFocus = throttle($.proxy($el.adjustFocus, $el), settings.throttleDuration);
+		var isListening = false;
 
-			$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
-			$el.adjustFocus(); //Focus image in container
+		$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
+		$el.adjustFocus(); //Focus image in container
 
-			if (settings.reCalcOnWindowResize) {
+		// expose a public API
+		return {
+
+			start: function() {
+				if (isListening) return;
 				//Recalculate each time the window is resized
 				$window.on('resize', thrAdjustFocus);
+				return isListening = true;
+			},
+
+			stop: function() {
+				if (!isListening) return;
+				// stop listening to the resize event
+				$window.off('resize', thrAdjustFocus);
+				isListening = false;
+				return true;
 			}
+
+		};
+	};
+
+	$.fn.focusPoint = function(options) {
+		var settings = $.extend({}, defaults, options);
+		return this.each(function() {
+			var $el = $(this);
+			var fp = focusPoint($el, settings);
+			// stop the resize event of any previous attached
+			// focusPoint instances
+			if ($el.data('focusPoint')) $el.data('focusPoint').stop();
+			$el.data('focusPoint', fp);
+			if (settings.reCalcOnWindowResize) fp.start();
 		});
+
 	};
 
 	$.fn.adjustFocus = function() {
