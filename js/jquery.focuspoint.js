@@ -51,13 +51,15 @@
 		return def.promise();
 	};
 
-	// create a debounced version of a function
-	var debounce = function(fn, ms) {
-		var timer;
+	// create a throttled version of a function
+	var throttle = function(fn, ms) {
+		var isRunning = false;
 		return function() {
 			var args = Array.prototype.slice.call(arguments, 0);
-			if (timer) clearTimeout(timer);
-			timer = setTimeout(function() {
+			if (isRunning) return false;
+			isRunning = true;
+			setTimeout(function() {
+				isRunning = false;
 				fn.apply(null, args);
 			}, ms);
 		};
@@ -137,14 +139,14 @@
 			//Initial adjustments
 			var $el = $(this);
 			var $window = $(window);
-			var debAdjustFocus = debounce($.proxy($el.adjustFocus, $el), settings.throttleDuration);
+			var thrAdjustFocus = throttle($.proxy($el.adjustFocus, $el), settings.throttleDuration);
 
 			$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
 			$el.adjustFocus(); //Focus image in container
 
 			if (settings.reCalcOnWindowResize) {
 				//Recalculate each time the window is resized
-				$window.on('resize', debAdjustFocus);
+				$window.on('resize', thrAdjustFocus);
 			}
 		});
 	};
