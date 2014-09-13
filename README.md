@@ -23,7 +23,7 @@ Here are some examples showing the same image cropped a variety of different way
 
 And here is a [full screen](http://jonom.github.io/jquery-focuspoint/demos/full-screen/index.html) demo.
 
-## How's it work?
+## How does it work?
 
 The idea is that most images have a focal point or subject that is the most important part of the image. In the case of a traditional portrait photo this would be the subject's face (or specifically the spot right between their eyes). In the image above it's arguably the point halfway between the two people's faces.
 
