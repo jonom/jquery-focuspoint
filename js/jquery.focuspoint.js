@@ -7,150 +7,178 @@
  */
 ;
 (function($) {
-	$.fn.focusPoint = function(options) {
-		var settings = $.extend({
-			//These are the defaults.
-			reCalcOnWindowResize: true,
-			throttleDuration: 17 //ms - set to 0 to disable throttling
-		}, options);
-		return this.each(function() {
-			//Initial adjustments
-			var container = $(this), isThrottled = false;
-			//Replace basic css positioning with more accurate version
-			container.removeClass('focus-left-top focus-left-center focus-left-bottom focus-center-top focus-center-center focus-center-bottom focus-right-top focus-right-center focus-right-bottom');
-			//Focus image in container
-			container.adjustFocus();
-			if (settings.reCalcOnWindowResize) {
-				//Recalculate each time the window is resized
-				$(window).resize(function() {
-					//Throttle redraws
-					if (settings.throttleDuration > 0){
-				    if (isThrottled) { return; }
-				    isThrottled = true;
-				    setTimeout(function () {
-				    	isThrottled = false;
-				    	container.adjustFocus();
-				    }, settings.throttleDuration);
-			    }
-					container.adjustFocus();
-				});
-			}
+
+	var defaults = {
+		reCalcOnWindowResize: true,
+		throttleDuration: 17 //ms - set to 0 to disable throttling
+	};
+
+	//Fallback css classes
+	var focusCssClasses = [
+		'focus-left-top', 'focus-left-center', 'focus-left-bottom',
+		'focus-center-top', 'focus-center-center', 'focus-center-bottom',
+		'focus-right-top', 'focus-right-center', 'focus-right-bottom'
+	];
+
+	//Setup a container instance
+	var setupContainer = function($el) {
+		var imageSrc = $el.find('img').attr('src');
+		$el.data('imageSrc', imageSrc);
+
+		resolveImageSize(imageSrc, function(err, dim) {
+			$el.data({
+				imageW: dim.width,
+				imageH: dim.height
+			});
+			$el.adjustFocus();
 		});
 	};
+
+	//Get the width and the height of an image
+	//by creating a new temporary image
+	var resolveImageSize = function(src, cb) {
+		//Create a new image and set a
+		//handler which listens to the first
+		//call of the 'load' event.
+		$('<img />').one('load', function() {
+			//'this' references to the new
+			//created image
+			cb(null, {
+				width: this.width,
+				height: this.height
+			});
+		}).attr('src', src);
+	};
+
+	//Create a throttled version of a function
+	var throttle = function(fn, ms) {
+		var isRunning = false;
+		return function() {
+			var args = Array.prototype.slice.call(arguments, 0);
+			if (isRunning) return false;
+			isRunning = true;
+			setTimeout(function() {
+				isRunning = false;
+				fn.apply(null, args);
+			}, ms);
+		};
+	};
+
+	//Calculate the new left/top values of an image
+	var calcShift = function(conToImageRatio, containerSize, imageSize, focusSize, toMinus) {
+		var containerCenter = Math.floor(containerSize / 2); //Container center in px
+		var focusFactor = (focusSize + 1) / 2; //Focus point of resize image in px
+		var scaledImage = Math.floor(imageSize / conToImageRatio); //Can't use width() as images may be display:none
+		var focus =  Math.floor(focusFactor * scaledImage);
+		if (toMinus) focus = scaledImage - focus;
+		var focusOffset = focus - containerCenter; //Calculate difference between focus point and center
+		var remainder = scaledImage - focus; //Reduce offset if necessary so image remains filled
+		var containerRemainder = containerSize - containerCenter;
+		if (remainder < containerRemainder) focusOffset -= containerRemainder - remainder;
+		if (focusOffset < 0) focusOffset = 0;
+
+		return focusOffset * -1;
+	};
+
+	//Re-adjust the focus
+	var adjustFocus = function($el) {
+		var imageW = $el.data('imageW');
+		var imageH = $el.data('imageH');
+		var imageSrc = $el.data('imageSrc');
+
+		if (!imageW && !imageH && !imageSrc) {
+			return setupContainer($el); //Setup the container first
+		}
+
+		var containerW = $el.width();
+		var containerH = $el.height();
+		var focusX = parseFloat($el.data('focus-x'));
+		var focusY = parseFloat($el.data('focus-y'));
+		var $image = $el.find('img').first();
+
+		//Amount position will be shifted
+		var hShift = 0;
+		var vShift = 0;
+
+		//Which is over by more?
+		var wR = imageW / containerW;
+		var hR = imageH / containerH;
+
+		if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
+			return false; //Need dimensions to proceed
+		}
+
+		//Reset max-width and -height
+		$image.css({
+			'max-width': '',
+			'max-height': ''
+		});
+
+		//Minimize image while still filling space
+		if (imageW > containerW && imageH > containerH) {
+			$image.css((wR > hR) ? 'max-height' : 'max-width', '100%');
+		}
+
+		if (wR > hR) {
+			hShift = calcShift(hR, containerW, imageW, focusX);
+		} else if (wR < hR) {
+			vShift = calcShift(wR, containerH, imageH, focusY, true);
+		}
+
+		$image.css({
+			top: vShift,
+			left: hShift
+		});
+	};
+
+	var $window = $(window);
+
+	var focusPoint = function($el, settings) {
+		var thrAdjustFocus = throttle($.proxy($el.adjustFocus, $el), settings.throttleDuration);
+		var isListening = false;
+
+		$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
+		$el.adjustFocus(); //Focus image in container
+
+		//Expose a public API
+		return {
+
+			start: function() {
+				if (isListening) return;
+				//Recalculate each time the window is resized
+				$window.on('resize', thrAdjustFocus);
+				return isListening = true;
+			},
+
+			stop: function() {
+				if (!isListening) return;
+				//Stop listening to the resize event
+				$window.off('resize', thrAdjustFocus);
+				isListening = false;
+				return true;
+			}
+
+		};
+	};
+
+	$.fn.focusPoint = function(options) {
+		var settings = $.extend({}, defaults, options);
+		return this.each(function() {
+			var $el = $(this);
+			var fp = focusPoint($el, settings);
+			//Stop the resize event of any previous attached
+			//focusPoint instances
+			if ($el.data('focusPoint')) $el.data('focusPoint').stop();
+			$el.data('focusPoint', fp);
+			if (settings.reCalcOnWindowResize) fp.start();
+		});
+
+	};
+
 	$.fn.adjustFocus = function() {
 		return this.each(function() {
-			//Declare variables at top of scope
-			var containerW,
-				containerH,
-				image,
-				imageW,
-				imageH,
-				self,
-				imageTmp,
-				wR,
-				hR,
-				hShift,
-				vShift,
-				containerCenterX,
-				focusFactorX,
-				scaledImageWidth,
-				focusX,
-				focusOffsetX,
-				xRemainder,
-				containerXRemainder,
-				containerCenterY,
-				focusFactorY,
-				scaledImageHeight,
-				focusY,
-				focusOffsetY,
-				yRemainder,
-				containerYRemainder;
-			//Collect dimensions
-			containerW = $(this).width();
-			containerH = $(this).height();
-			image = $(this).find('img').first();
-			imageW = $(this).data('imageW');
-			imageH = $(this).data('imageH');
-			//Get image dimensions if not set on container
-			if (!imageW || !imageH) {
-				self = this;
-				imageTmp = new Image();
-				imageTmp.onload = function(){
-					$(self).data('imageW', this.width);
-					$(self).data('imageH', this.height);
-					$(self).adjustFocus(); //adjust once image is loaded - may cause a visible jump
-				};
-				imageTmp.src = image.attr('src');
-				return false; //Don't proceed right now, will try again once image has loaded
-			}
-			if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
-				//Need dimensions to proceed
-				return false;
-			}
-			//Which is over by more?
-			wR = imageW / containerW;
-			hR = imageH / containerH;
-			//Minimise image while still filling space
-			if (imageW > containerW && imageH > containerH) {
-				if (wR > hR) {
-					image.css('max-width', '');
-					image.css('max-height', '100%');
-				} else {
-					image.css('max-width', '100%');
-					image.css('max-height', '');
-				}
-			} else {
-				image.css('max-width', '');
-				image.css('max-height', '');
-			}
-			//Amount position will be shifted
-			hShift = 0;
-			vShift = 0;
-			if (wR > hR) {
-				//Container center in px
-				containerCenterX = Math.floor(containerW / 2);
-				//Focus point of resize image in px
-				focusFactorX = (Number($(this).data('focus-x')) + 1) / 2;
-				//Can't use width() as images may be display:none
-				scaledImageWidth = Math.floor(imageW / hR);
-				focusX = Math.floor(focusFactorX * scaledImageWidth);
-				//Calculate difference beetween focus point and center
-				focusOffsetX = focusX - containerCenterX;
-				//Reduce offset if necessary so image remains filled
-				xRemainder = scaledImageWidth - focusX;
-				containerXRemainder = containerW - containerCenterX;
-				if (xRemainder < containerXRemainder){
-					focusOffsetX -= containerXRemainder - xRemainder;
-				}
-				if (focusOffsetX < 0) {
-					focusOffsetX = 0;
-				}
-				//Shift to left
-				hShift = focusOffsetX * -1;
-			} else if (wR < hR) {
-				//Container center in px
-				containerCenterY = Math.floor(containerH / 2);
-				//Focus point of resize image in px
-				focusFactorY = (Number($(this).data('focus-y')) + 1) / 2;
-				//Can't use width() as images may be display:none
-				scaledImageHeight = Math.floor(imageH / wR);
-				focusY = scaledImageHeight - Math.floor(focusFactorY * scaledImageHeight);
-				//Calculate difference beetween focus point and center
-				focusOffsetY = focusY - containerCenterY;
-				//Reduce offset if necessary so image remains filled
-				yRemainder = scaledImageHeight - focusY;
-				containerYRemainder = containerH - containerCenterY;
-				if (yRemainder < containerYRemainder) {
-					focusOffsetY -= containerYRemainder - yRemainder;
-				}
-				if (focusOffsetY < 0) {
-					focusOffsetY = 0;
-				}
-				//Shift to top
-				vShift = focusOffsetY * -1;
-			}
-			image.css('left', hShift + 'px');
-			image.css('top', vShift + 'px');
+			adjustFocus($(this));
 		});
 	};
+
 })(jQuery);
