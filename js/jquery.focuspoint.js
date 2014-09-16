@@ -1,5 +1,5 @@
 /**
- * jQuery FocusPoint; version: 1.0.3
+ * jQuery FocusPoint; version: 1.0.3b
  * Author: http://jonathonmenz.com
  * Source: https://github.com/jonom/jquery-focuspoint
  * Copyright (c) 2014 J. Menz; MIT License
@@ -92,8 +92,8 @@
 
 		var containerW = $el.width();
 		var containerH = $el.height();
-		var focusX = parseFloat($el.data('focus-x'));
-		var focusY = parseFloat($el.data('focus-y'));
+		var focusX = parseFloat($el.data('focusX'));
+		var focusY = parseFloat($el.data('focusY'));
 		var $image = $el.find('img').first();
 
 		//Amount position will be shifted
