@@ -25,30 +25,29 @@
 		var imageSrc = $el.find('img').attr('src');
 		$el.data('imageSrc', imageSrc);
 
-		resolveImageSize(imageSrc)
-			.then(function(dim) {
-				$el.data({
-					imageW: dim.width,
-					imageH: dim.height
-				});
-				$el.adjustFocus();
+		resolveImageSize(imageSrc, function(err, dim) {
+			$el.data({
+				imageW: dim.width,
+				imageH: dim.height
 			});
+			$el.adjustFocus();
+		});
 	};
 
 	// get the width and the height of an image
 	// by creating a new temporary image
-	var resolveImageSize = function(src) {
-		var def = new jQuery.Deferred();
-		var $img = $('<img />');
-
-		$img.one('load', function() {
-			def.resolve({
-				width: $img.width(),
-				height: $img.height()
+	var resolveImageSize = function(src, cb) {
+		// create a new image and set an
+		// handler which listens to the first
+		// call of the 'load' event.
+		$('<img />').one('load', function() {
+			// 'this' references to the new
+			// created image
+			cb(null, {
+				width: this.width,
+				height: this.height
 			});
 		}).attr('src', src);
-
-		return def.promise();
 	};
 
 	// create a throttled version of a function
