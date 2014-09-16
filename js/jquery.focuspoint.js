@@ -13,14 +13,14 @@
 		throttleDuration: 17 //ms - set to 0 to disable throttling
 	};
 
-	// fallback css classes
+	//Fallback css classes
 	var focusCssClasses = [
 		'focus-left-top', 'focus-left-center', 'focus-left-bottom',
 		'focus-center-top', 'focus-center-center', 'focus-center-bottom',
 		'focus-right-top', 'focus-right-center', 'focus-right-bottom'
 	];
 
-	// setup a container instance
+	//Setup a container instance
 	var setupContainer = function($el) {
 		var imageSrc = $el.find('img').attr('src');
 		$el.data('imageSrc', imageSrc);
@@ -34,15 +34,15 @@
 		});
 	};
 
-	// get the width and the height of an image
-	// by creating a new temporary image
+	//Get the width and the height of an image
+	//by creating a new temporary image
 	var resolveImageSize = function(src, cb) {
-		// create a new image and set an
-		// handler which listens to the first
-		// call of the 'load' event.
+		//Create a new image and set a
+		//handler which listens to the first
+		//call of the 'load' event.
 		$('<img />').one('load', function() {
-			// 'this' references to the new
-			// created image
+			//'this' references to the new
+			//created image
 			cb(null, {
 				width: this.width,
 				height: this.height
@@ -50,7 +50,7 @@
 		}).attr('src', src);
 	};
 
-	// create a throttled version of a function
+	//Create a throttled version of a function
 	var throttle = function(fn, ms) {
 		var isRunning = false;
 		return function() {
@@ -64,7 +64,7 @@
 		};
 	};
 
-	// this calculates the new left/top values of an image
+	//Calculate the new left/top values of an image
 	var calcShift = function(conToImageRatio, containerSize, imageSize, focusSize, toMinus) {
 		var containerCenter = Math.floor(containerSize / 2); //Container center in px
 		var focusFactor = (focusSize + 1) / 2; //Focus point of resize image in px
@@ -80,14 +80,14 @@
 		return focusOffset * -1;
 	};
 
-	// re-adjust the focus
+	//Re-adjust the focus
 	var adjustFocus = function($el) {
 		var imageW = $el.data('imageW');
 		var imageH = $el.data('imageH');
 		var imageSrc = $el.data('imageSrc');
 
 		if (!imageW && !imageH && !imageSrc) {
-			return setupContainer($el); // setup the container first
+			return setupContainer($el); //Setup the container first
 		}
 
 		var containerW = $el.width();
@@ -108,7 +108,7 @@
 			return false; //Need dimensions to proceed
 		}
 
-		// reset max-width and -height
+		//Reset max-width and -height
 		$image.css({
 			'max-width': '',
 			'max-height': ''
@@ -140,7 +140,7 @@
 		$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
 		$el.adjustFocus(); //Focus image in container
 
-		// expose a public API
+		//Expose a public API
 		return {
 
 			start: function() {
@@ -152,7 +152,7 @@
 
 			stop: function() {
 				if (!isListening) return;
-				// stop listening to the resize event
+				//Stop listening to the resize event
 				$window.off('resize', thrAdjustFocus);
 				isListening = false;
 				return true;
@@ -166,8 +166,8 @@
 		return this.each(function() {
 			var $el = $(this);
 			var fp = focusPoint($el, settings);
-			// stop the resize event of any previous attached
-			// focusPoint instances
+			//Stop the resize event of any previous attached
+			//focusPoint instances
 			if ($el.data('focusPoint')) $el.data('focusPoint').stop();
 			$el.data('focusPoint', fp);
 			if (settings.reCalcOnWindowResize) fp.start();
