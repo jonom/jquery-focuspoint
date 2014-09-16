@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>FocusPoint Tests</title>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		
+		<link rel="stylesheet" type="text/css" href="../../css/focuspoint.css">
+		<link rel="stylesheet" type="text/css" href="../demo.css">
+		<link rel="stylesheet" type="text/css" href="test.css">
+		
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.focuspoint.js"></script>
+		
+		<script type="text/javascript">
+		//<![CDATA[	
+			
+			(function($) {
+				$(document).ready(function() {
+					
+					//Activate test cases individually
+					$('#Default').focusPoint();
+					$('#MissingWH').focusPoint();
+					$('#ThrottleSlow').focusPoint({
+						throttleDuration: 500 //ms
+					});
+					$('#NoThrottle').focusPoint({
+						throttleDuration: 0 //ms
+					});
+					$('#NoResize').focusPoint({
+						reCalcOnWindowResize : false
+					});
+					$('#NoResize a.adjust').click(function(){
+						$('#NoResize').adjustFocus();
+						return false;
+					});
+					$('#NoResize a.start').click(function(){
+						$('#NoResize').data('focusPoint').start();
+						return false;
+					});
+					$('#NoResize a.stop').click(function(){
+						$('#NoResize').data('focusPoint').stop();
+						return false;
+					});
+					
+				});
+			}(jQuery));
+		
+		//]]>
+		</script>
+		
+	</head>
+	<body>
+	
+		<p><b>FocusPoint Tests</b> <a href="https://github.com/jonom/jquery-focuspoint">» Project&nbsp;Home</a></p>
+	
+			<div id="Default" class="focuspoint"
+			data-focus-x="0.29"
+			data-focus-y="-0.284"
+			data-image-w="667"
+			data-image-h="1000">
+				<img src="../img/bird.jpg" alt="" />
+				<span class="label">Default behaviour</span>
+			</div>
+	
+			<div id="MissingWH" class="focuspoint"
+			data-focus-x="0.29"
+			data-focus-y="-0.284">
+				<img src="../img/bird.jpg" alt="" />
+				<span class="label">Missing image-w and image-h</span>
+			</div>
+	
+			<div id="ThrottleSlow" class="focuspoint"
+			data-focus-x="0.29"
+			data-focus-y="-0.284"
+			data-image-w="667"
+			data-image-h="1000">
+				<img src="../img/bird.jpg" alt="" />
+				<span class="label">Slow redraw (high throttleDuration)</span>
+			</div>
+	
+			<div id="NoThrottle" class="focuspoint"
+			data-focus-x="0.29"
+			data-focus-y="-0.284"
+			data-image-w="667"
+			data-image-h="1000">
+				<img src="../img/bird.jpg" alt="" />
+				<span class="label">No throttling</span>
+			</div>
+	
+			<div id="NoResize" class="focuspoint"
+			data-focus-x="0.29"
+			data-focus-y="-0.284"
+			data-image-w="667"
+			data-image-h="1000">
+				<img src="../img/bird.jpg" alt="" />
+				<span class="label">Don't adjust on window resize 
+					<a href="#" class="adjust">» Adjust Focus</a>
+					<a href="#" class="start">» Start adjusting on resize (Coming Soon)</a>
+					<a href="#" class="stop">» Stop adjusting on resize (Coming Soon)</a>
+				</span>
+			</div>
+	
+	</body>
+</html>
