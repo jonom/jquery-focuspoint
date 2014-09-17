@@ -30,7 +30,7 @@
 				imageW: dim.width,
 				imageH: dim.height
 			});
-			$el.adjustFocus();
+			adjustFocus($el);
 		});
 	};
 
@@ -134,11 +134,11 @@
 	var $window = $(window);
 
 	var focusPoint = function($el, settings) {
-		var thrAdjustFocus = throttle($.proxy($el.adjustFocus, $el), settings.throttleDuration);
+		var thrAdjustFocus = throttle(function(){adjustFocus($el);}, settings.throttleDuration);
 		var isListening = false;
 
 		$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
-		$el.adjustFocus(); //Focus image in container
+		adjustFocus($el); //Focus image in container
 
 		//Expose a public API
 		return {
@@ -156,6 +156,10 @@
 				$window.off('resize', thrAdjustFocus);
 				isListening = false;
 				return true;
+			},
+
+			adjustFocus: function() {
+				return adjustFocus($el);
 			}
 
 		};
@@ -176,6 +180,7 @@
 	};
 
 	$.fn.adjustFocus = function() {
+		//Deprecated v1.1
 		return this.each(function() {
 			adjustFocus($(this));
 		});
