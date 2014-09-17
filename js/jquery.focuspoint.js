@@ -134,7 +134,9 @@
 	var $window = $(window);
 
 	var focusPoint = function($el, settings) {
-		var thrAdjustFocus = throttle(function(){adjustFocus($el);}, settings.throttleDuration);
+		var thrAdjustFocus = settings.throttleDuration ?
+			throttle(function(){adjustFocus($el);}, settings.throttleDuration)
+			: function(){adjustFocus($el);};//Only throttle when desired
 		var isListening = false;
 
 		$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
