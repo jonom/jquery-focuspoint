@@ -167,8 +167,16 @@
 		};
 	};
 
-	$.fn.focusPoint = function(options) {
-		var settings = $.extend({}, defaults, options);
+	$.fn.focusPoint = function(optionsOrMethod) {
+		//Shortcut to functions - if string passed assume method name and execute
+		if (typeof optionsOrMethod === 'string') {
+			return this.each(function() {
+				var $el = $(this);
+				$el.data('focusPoint')[optionsOrMethod]();
+			});
+		}
+		//Otherwise assume options being passed and setup
+		var settings = $.extend({}, defaults, optionsOrMethod);
 		return this.each(function() {
 			var $el = $(this);
 			var fp = focusPoint($el, settings);

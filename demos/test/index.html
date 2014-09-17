@@ -33,19 +33,19 @@
 						reCalcOnWindowResize : false
 					});
 					$('#NoResize a.adjust').click(function(){
-						$('#NoResize').adjustFocus();
+						$('#NoResize').focusPoint('adjustFocus'); //Short for .data('focusPoint').adjustFocus();
 						return false;
 					});
 					$('#NoResize a.adjust2').click(function(){
-						$('#NoResize').data('focusPoint').adjustFocus();
+						$('#NoResize').adjustFocus(); //Old method
 						return false;
 					});
 					$('#NoResize a.start').click(function(){
-						$('#NoResize').data('focusPoint').start();
+						$('#NoResize').focusPoint('start');
 						return false;
 					});
 					$('#NoResize a.stop').click(function(){
-						$('#NoResize').data('focusPoint').stop();
+						$('#NoResize').focusPoint('stop');
 						return false;
 					});
 					
@@ -102,9 +102,9 @@
 				<img src="../img/bird.jpg" alt="" />
 				<span class="label">Don't adjust on window resize 
 					<a href="#" class="adjust">» Adjust Focus</a>
-					<a href="#" class="adjust2">» Adjust Focus (data version)</a>
-					<a href="#" class="start">» Start adjusting on resize</a>
-					<a href="#" class="stop">» Stop adjusting on resize</a>
+					<a href="#" class="adjust2">» Adjust Focus (old method)</a>
+					<a href="#" class="start">» Start</a>
+					<a href="#" class="stop">» Stop</a>
 				</span>
 			</div>
 	
