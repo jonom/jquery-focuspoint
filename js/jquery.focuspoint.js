@@ -77,7 +77,7 @@
 		if (remainder < containerRemainder) focusOffset -= containerRemainder - remainder;
 		if (focusOffset < 0) focusOffset = 0;
 
-		return focusOffset * -1;
+		return (focusOffset * -100 / containerSize)  + '%';
 	};
 
 	//Re-adjust the focus
