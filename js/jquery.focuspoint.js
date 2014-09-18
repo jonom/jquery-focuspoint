@@ -145,23 +145,23 @@
 		//Expose a public API
 		return {
 
-			start: function() {
+			adjustFocus: function() {
+				return adjustFocus($el);
+			},
+
+			windowOn: function() {
 				if (isListening) return;
 				//Recalculate each time the window is resized
 				$window.on('resize', thrAdjustFocus);
 				return isListening = true;
 			},
 
-			stop: function() {
+			windowOff: function() {
 				if (!isListening) return;
 				//Stop listening to the resize event
 				$window.off('resize', thrAdjustFocus);
 				isListening = false;
 				return true;
-			},
-
-			adjustFocus: function() {
-				return adjustFocus($el);
 			}
 
 		};
@@ -182,15 +182,15 @@
 			var fp = focusPoint($el, settings);
 			//Stop the resize event of any previous attached
 			//focusPoint instances
-			if ($el.data('focusPoint')) $el.data('focusPoint').stop();
+			if ($el.data('focusPoint')) $el.data('focusPoint').windowOff();
 			$el.data('focusPoint', fp);
-			if (settings.reCalcOnWindowResize) fp.start();
+			if (settings.reCalcOnWindowResize) fp.windowOn();
 		});
 
 	};
 
 	$.fn.adjustFocus = function() {
-		//Deprecated v1.1
+		//Deprecated v1.2
 		return this.each(function() {
 			adjustFocus($(this));
 		});

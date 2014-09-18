@@ -79,35 +79,36 @@ That's it!
 
 #### Configuration options
 
-By default images are re-focused when the window is resized. You can disable this like so:
+FocusPoint comes with a few options you can change to suit your needs.
+
+| Option                 | Values                | Default | Description |
+| ---------------------- | --------------------- | ------- | ----------- |
+| `reCalcOnWindowResize` | `true` or `false`     | `true`  | Whether or not to re-adjust image when the window is resized |
+| `throttleDuration`     | Int e.g. `0` or `100` | `17`    | Throttling rate in milliseconds. Set to `0` to disable throttling. |
+
+Example useage:
 
 ```javascript
 $('.focuspoint').focusPoint({
-	reCalcOnWindowResize : false
+	throttleDuration: 100 //re-focus images at most once every 100ms.
 });
 ```
 
-You can also change how often images are re-focused during window resizing:
+#### FocusPoint functions
 
-```javascript
-//Re-focus images at most once every 100ms
-$('.focuspoint').focusPoint({
-	throttleDuration: 100
-});
+Once you have initialised FocusPoint on an image container you can access FocusPoint methods like this: `$(someContainer).data('focusPoint').methodName()`.
 
-//Disable throttling
-$('.focuspoint').focusPoint({
-	throttleDuration: 0
-});
-```
+Or the shorter way, like this: `$(someContainer).focusPoint('methodName')`
 
-#### Other functions
+| Function        | Description |
+| --------------- | ----------- |
+| `adjustFocus()` | Re-do calculations and re-position an image in it's frame. Call if container dimensions change. |
+| `windowOn()`    | Start window event listener and re-focus image when window is resized |
+| `windowOff()`   | Stop re-focusing image when window is resized |
 
-You can re-focus images at any time with `adjustFocus()`. This recalculates where the image should be positioned in the frame. An example where you may need to do this is if you are using FocusPoint images within a slider. FocusPoint can't do it's calculations properly if an image container is hidden (as it won't have any dimensions), so you should trigger `adjustFocus()` on the target container as soon as it becomes visible. Example:
+#### Using FocusPoint in content sliders
 
-```javascript
-$('.focuspoint').adjustFocus()
-```
+Currently FocusPoint can't do it's calculations properly if an image container or it's parent is set to `display:none`, as it won't have any dimensions. This can cause problems with sliders that hide non-active slides. A work-around for now is to trigger `adjustFocus()` on the image container as soon as it become visible.
 
 ## Tips & Tricks
 
@@ -135,6 +136,11 @@ If FocusPoint helped you impress a client and you want to say thanks, you're wel
 
 ## Changelog
 
+#### v1.1.0 2014-09-18
+Refactored code (thanks @xat)  
+Added ability to start/stop window-resize listener (thanks @xat)  
+Use % instead of px for positioning, for better scaling  
+Added shortcuts to plugin methods
 #### v1.0.3 2014-09-06
 Throttled window resize updates
 #### v1.0.2 2014-09-05
