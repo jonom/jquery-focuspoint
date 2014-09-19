@@ -11,7 +11,7 @@
 	var defaults = {
 		reCalcOnWindowResize: true,
 		throttleDuration: 17, //ms - set to 0 to disable throttling
-		transform: false // one of false, 'transform', '-webkit-transform', -ms-transform, -o-transform, supply the proper prefixed value.
+		transform: 'transform' // one of false, 'transform', '-webkit-transform', -ms-transform, -o-transform, supply the proper prefixed value.
 	};
 
 	//Fallback css classes
@@ -129,9 +129,7 @@
 			vShift = calcShift(wR, containerH, imageH, focusY, true, !settings.transform);
 		}
 		if ( settings.transform ) {
-			$image.css({
-				transform: 'translate(' + hShift + ',' + vShift + ') translate3d(0,0,0)'
-			});
+			$image.css( settings.transform, 'translate(' + hShift + ',' + vShift + ') translate3d(0,0,0)');
 		} else {
 			$image.css({
 				top: vShift,
