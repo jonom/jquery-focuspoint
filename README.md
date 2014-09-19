@@ -10,6 +10,8 @@ If you have to use the same image file in all these contexts, you might not be h
 
 FocusPoint makes sure your image looks great in any container, by ensuring the 'spare' parts of your image (negative space) are cropped out before the important parts.
 
+For a quick overview of the plugin check out this [video by Petr Tichy](http://youtu.be/Wxmxsw65BQw?t=6m49s).
+
 ## Examples
 
 Here are some examples showing the same image cropped a variety of different ways at once. Make sure you play with resizing the browser window to get a feel for what FocusPoint does.
@@ -21,7 +23,7 @@ Here are some examples showing the same image cropped a variety of different way
 
 And here is a [full screen](http://jonom.github.io/jquery-focuspoint/demos/full-screen/index.html) demo.
 
-## How's it work?
+## How does it work?
 
 The idea is that most images have a focal point or subject that is the most important part of the image. In the case of a traditional portrait photo this would be the subject's face (or specifically the spot right between their eyes). In the image above it's arguably the point halfway between the two people's faces.
 
@@ -36,7 +38,7 @@ An image's focus point is made up of x (horizontal) and y (vertical) coordinates
 
 ![image](demos/img/grid.png?raw=true)
 
-**Confused?** Don't worry, there's a handy script included to help you find the focus coordinates of an image with a single click (vastly improved courtesy of [https://github.com/auginator](@auginator)). [See an example here](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html).
+**Confused?** Don't worry, there's a handy script included to help you find the focus coordinates of an image with a single click. Check out the [helper tool](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) *(vastly improved courtesy of [@auginator](https://github.com/auginator)).*
 
 #### 2. Include javascript and CSS
 
@@ -77,35 +79,36 @@ That's it!
 
 #### Configuration options
 
-By default images are re-focused when the window is resized. You can disable this like so:
+FocusPoint comes with a few options you can change to suit your needs.
+
+| Option                 | Values                | Default | Description |
+| ---------------------- | --------------------- | ------- | ----------- |
+| `reCalcOnWindowResize` | `true` or `false`     | `true`  | Whether or not to re-adjust image when the window is resized |
+| `throttleDuration`     | Int e.g. `0` or `100` | `17`    | Throttling rate in milliseconds. Set to `0` to disable throttling. |
+
+Example useage:
 
 ```javascript
 $('.focuspoint').focusPoint({
-	reCalcOnWindowResize : false
+	throttleDuration: 100 //re-focus images at most once every 100ms.
 });
 ```
 
-You can also change how often images are re-focused during window resizing:
+#### FocusPoint functions
 
-```javascript
-//Re-focus images at most once every 100ms
-$('.focuspoint').focusPoint({
-	throttleDuration: 100
-});
+Once you have initialised FocusPoint on an image container you can access FocusPoint methods like this: `$(someContainer).data('focusPoint').methodName()`.
 
-//Disable throttling
-$('.focuspoint').focusPoint({
-	throttleDuration: 0
-});
-```
+Or the shorter way, like this: `$(someContainer).focusPoint('methodName')`
 
-#### Other functions
+| Function        | Description |
+| --------------- | ----------- |
+| `adjustFocus()` | Re-do calculations and re-position an image in it's frame. Call if container dimensions change. |
+| `windowOn()`    | Start window event listener and re-focus image when window is resized |
+| `windowOff()`   | Stop re-focusing image when window is resized |
 
-You can re-focus images at any time with `adjustFocus()`. This recalculates where the image should be positioned in the frame. An example where you may need to do this is if you are using FocusPoint images within a slider. FocusPoint can't do it's calculations properly if an image container is hidden (as it won't have any dimensions), so you should trigger `adjustFocus()` on the target container as soon as it becomes visible. Example:
+#### Using FocusPoint in content sliders
 
-```javascript
-$('.focuspoint').adjustFocus()
-```
+Currently FocusPoint can't do it's calculations properly if an image container or it's parent is set to `display:none`, as it won't have any dimensions. This can cause problems with sliders that hide non-active slides. A work-around for now is to trigger `adjustFocus()` on the image container as soon as it become visible.
 
 ## Tips & Tricks
 
@@ -116,7 +119,8 @@ In order for this concept of 'fluid cropping' to work well, your images will nee
 
 You can get a similar effect to this technique using only CSS and the `background-position` and `background-size` properties. Browser support isn't as good (at the moment) and your image won't be positioned exactly the same way - but it's pretty close. The CSS technique leans towards preserving the original composition while FocusPoint is biased towards keeping the subject of the image in the centre of the frame. Depending on your requirements either technique may suit you better.
 
-[Pure CSS Example and comparison](http://jonom.github.io/jquery-focuspoint/demos/css-js-comparison/index.html)
+* [Pure CSS example and comparison](http://jonom.github.io/jquery-focuspoint/demos/css-js-comparison/index.html)
+* [Helper tool for calculating CSS values](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html)
 
 #### SilverStripe CMS integration
 
@@ -126,11 +130,17 @@ This plugin plays really well with the [silverstripe-focuspoint](https://github.
 
 Nothing would encourage me to keep updating this script more than hearing how it's been used in the real world. Get in touch with me at [jonathonmenz.com](http://jonathonmenz.com) to let me know how you've used this plugin or any suggestions you have for improving it. Please [report bugs or issues on github](https://github.com/jonom/jquery-focuspoint/issues).
 
-**Feeling generous?**  
+#### Feeling generous?
+
 If FocusPoint helped you impress a client and you want to say thanks, you're welcome to [leave a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC) to help fund the purchase of coffee, which will help facilitate future development. But that is totally optional.
 
 ## Changelog
 
+#### v1.1.0 2014-09-18
+Refactored code (thanks @xat)  
+Added ability to start/stop window-resize listener (thanks @xat)  
+Use % instead of px for positioning, for better scaling  
+Added shortcuts to plugin methods
 #### v1.0.3 2014-09-06
 Throttled window resize updates
 #### v1.0.2 2014-09-05

@@ -1,0 +1,16 @@
+/* !CONTAINERS */
+/*-----------------------------------------*/
+
+.focuspoint {
+	height: 200px;
+	margin-bottom: 20px;
+}
+.focuspoint .label {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	padding: 5px;
+	background: rgba(0,0,0,0.5);
+	color: #fff;
+}
