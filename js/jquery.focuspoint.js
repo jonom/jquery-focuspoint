@@ -10,8 +10,7 @@
 
 	var defaults = {
 		reCalcOnWindowResize: true,
-		throttleDuration: 17, //ms - set to 0 to disable throttling
-		transform: false // one of false, 'transform', '-webkit-transform', -ms-transform, -o-transform, supply the proper prefixed value.
+		throttleDuration: 17 //ms - set to 0 to disable throttling
 	};
 
 	//Fallback css classes
@@ -22,7 +21,7 @@
 	];
 
 	//Setup a container instance
-	var setupContainer = function($el, settings) {
+	var setupContainer = function($el) {
 		var imageSrc = $el.find('img').attr('src');
 		$el.data('imageSrc', imageSrc);
 
@@ -31,7 +30,7 @@
 				imageW: dim.width,
 				imageH: dim.height
 			});
-			adjustFocus($el, settings);
+			adjustFocus($el);
 		});
 	};
 
@@ -66,7 +65,7 @@
 	};
 
 	//Calculate the new left/top values of an image
-	var calcShift = function(conToImageRatio, containerSize, imageSize, focusSize, toMinus, noTransform) {
+	var calcShift = function(conToImageRatio, containerSize, imageSize, focusSize, toMinus) {
 		var containerCenter = Math.floor(containerSize / 2); //Container center in px
 		var focusFactor = (focusSize + 1) / 2; //Focus point of resize image in px
 		var scaledImage = Math.floor(imageSize / conToImageRatio); //Can't use width() as images may be display:none
@@ -77,21 +76,18 @@
 		var containerRemainder = containerSize - containerCenter;
 		if (remainder < containerRemainder) focusOffset -= containerRemainder - remainder;
 		if (focusOffset < 0) focusOffset = 0;
-		if ( noTransform ) {
-			return (focusOffset * -100 / containerSize)  + '%';
-		} else {
-			return focusOffset * -100 / scaledImage + '%';
-		}
+
+		return (focusOffset * -100 / containerSize)  + '%';
 	};
 
 	//Re-adjust the focus
-	var adjustFocus = function($el, settings) {
+	var adjustFocus = function($el) {
 		var imageW = $el.data('imageW');
 		var imageH = $el.data('imageH');
 		var imageSrc = $el.data('imageSrc');
 
 		if (!imageW && !imageH && !imageSrc) {
-			return setupContainer($el, settings); //Setup the container first
+			return setupContainer($el); //Setup the container first
 		}
 
 		var containerW = $el.width();
@@ -124,39 +120,33 @@
 		}
 
 		if (wR > hR) {
-			hShift = calcShift(hR, containerW, imageW, focusX, false, !settings.transform);
+			hShift = calcShift(hR, containerW, imageW, focusX);
 		} else if (wR < hR) {
-			vShift = calcShift(wR, containerH, imageH, focusY, true, !settings.transform);
+			vShift = calcShift(wR, containerH, imageH, focusY, true);
 		}
-		if ( settings.transform ) {
-			$image.css({
-				transform: 'translate(' + hShift + ',' + vShift + ') translate3d(0,0,0)'
-			});
-		} else {
-			$image.css({
-				top: vShift,
-				left: hShift
-			});
-		}
-		
+
+		$image.css({
+			top: vShift,
+			left: hShift
+		});
 	};
 
 	var $window = $(window);
 
 	var focusPoint = function($el, settings) {
 		var thrAdjustFocus = settings.throttleDuration ?
-			throttle(function(){adjustFocus($el, settings);}, settings.throttleDuration)
-			: function(){adjustFocus($el, settings);};//Only throttle when desired
+			throttle(function(){adjustFocus($el);}, settings.throttleDuration)
+			: function(){adjustFocus($el);};//Only throttle when desired
 		var isListening = false;
 
 		$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
-		adjustFocus($el, settings); //Focus image in container
+		adjustFocus($el); //Focus image in container
 
 		//Expose a public API
 		return {
 
 			adjustFocus: function() {
-				return adjustFocus($el, settings);
+				return adjustFocus($el);
 			},
 
 			windowOn: function() {
