@@ -68,7 +68,7 @@
 	var calcShift = function(conToImageRatio, containerSize, imageSize, focusSize, toMinus) {
 		var containerCenter = Math.floor(containerSize / 2); //Container center in px
 		var focusFactor = (focusSize + 1) / 2; //Focus point of resize image in px
-		var scaledImage = Math.floor(imageSize / conToImageRatio); //Can't use width() as images may be display:none
+		var scaledImage = Math.floor(imageSize * conToImageRatio); //Can't use width() as images may be display:none
 		var focus =  Math.floor(focusFactor * scaledImage);
 		if (toMinus) focus = scaledImage - focus;
 		var focusOffset = focus - containerCenter; //Calculate difference between focus point and center
@@ -100,13 +100,14 @@
 		var hShift = 0;
 		var vShift = 0;
 
-		//Which is over by more?
-		var wR = imageW / containerW;
-		var hR = imageH / containerH;
 
 		if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
 			return false; //Need dimensions to proceed
 		}
+
+		//Which is over by more?
+		var wR = containerW / imageW;
+		var hR = containerH / imageH;
 
 		//Reset max-width and -height
 		$image.css({
@@ -116,12 +117,12 @@
 
 		//Minimize image while still filling space
 		if (imageW > containerW && imageH > containerH) {
-			$image.css((wR > hR) ? 'max-height' : 'max-width', '100%');
+			$image.css((wR < hR) ? 'max-height' : 'max-width', '100%');
 		}
 
-		if (wR > hR) {
+		if (wR < hR) {
 			hShift = calcShift(hR, containerW, imageW, focusX);
-		} else if (wR < hR) {
+		} else if (wR > hR) {
 			vShift = calcShift(wR, containerH, imageH, focusY, true);
 		}
 
