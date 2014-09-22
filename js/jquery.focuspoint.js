@@ -110,7 +110,7 @@
 		var containerH = $el.height();
 		var focusX = parseFloat($el.data('focusX'));
 		var focusY = parseFloat($el.data('focusY'));
-		var $image = $el.find('img').first();
+		var $image = $el.find('img, video').first();
 
 		//Amount position will be shifted
 		var hShift = 0;

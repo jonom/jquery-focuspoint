@@ -4,6 +4,7 @@
 	position: relative; /*Any position but static should work*/
 	overflow: hidden;
 }
+.focuspoint video,
 .focuspoint img {
 	position: absolute;
 	left: 0;
@@ -15,6 +16,7 @@
 	min-width: 100%; min-height: 100%;
 	max-height: none; max-width: none;
 }
+.focus3d video,
 .focus3d img {
 	width: auto; height: auto;
 	min-width: 0; min-height: 0;
