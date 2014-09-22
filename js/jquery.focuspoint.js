@@ -121,6 +121,11 @@
 		var scale = 1;
 		//Do we use transform?
 		var transform = ($el.data('transform') === 'true');
+		//Is it a video?
+		if ( $image.length == 0 ) {
+			$image = $el.find('video').first();
+			transform = false;
+		}
 		
 		if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
 			return false; //Need dimensions to proceed
