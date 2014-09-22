@@ -10,7 +10,7 @@
 
 	var defaults = {
 		reCalcOnWindowResize: true,
-		transform: false, // one of false, 'transform', '-webkit-transform', -ms-transform, -o-transform, supply the proper prefixed value.
+		transform: true, // false, true.
 		throttleDuration: 17 //ms - set to 0 to disable throttling
 	};
 
@@ -119,8 +119,8 @@
 
 		//Scaling of the image in case of transform
 		var scale = 1;
-		//Prefixed transform name, read of the element
-		var transform = $el.data('transform');
+		//Do we use transform?
+		var transform = ($el.data('transform') === 'true');
 		
 		if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
 			return false; //Need dimensions to proceed
@@ -155,7 +155,7 @@
 		}
 		if (transform) {
 			$image.css('transform-origin', '0 0');
-			$image.css(transform, 'scale(' + scale + ') translate(' + hShift + ',' + vShift + ') translate3d(0,0,0)');
+			$image.css('transform', 'scale(' + scale + ') translate(' + hShift + ',' + vShift + ') translate3d(0,0,0)');
 		} else {
 			$image.css({
 				top: vShift,
@@ -174,9 +174,9 @@
 		var isListening = false;
 
 		$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
-		if (settings.transform) {
+		if (settings.transform ) {
 			$el.addClass( 'focus3d' );
-			$el.data( 'transform', settings.transform );
+			$el.data( 'transform', 'true' );
 		}
 		adjustFocus($el); //Focus image in container
 
