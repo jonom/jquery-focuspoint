@@ -65,10 +65,10 @@
 	};
 
 	//Calculate the new left/top values of an image
-	var calcShift = function(conToImageRatio, containerSize, imageSize, focusSize, toMinus) {
+	var calcShift = function(scale, containerSize, imageSize, focusSize, toMinus) {
 		var containerCenter = Math.floor(containerSize / 2); //Container center in px
 		var focusFactor = (focusSize + 1) / 2; //Focus point of resize image in px
-		var scaledImage = Math.floor(imageSize * conToImageRatio); //Can't use width() as images may be display:none
+		var scaledImage = Math.floor(imageSize * scale); //Can't use width() as images may be display:none
 		var focus =  Math.floor(focusFactor * scaledImage);
 		if (toMinus) focus = scaledImage - focus;
 		var focusOffset = focus - containerCenter; //Calculate difference between focus point and center
