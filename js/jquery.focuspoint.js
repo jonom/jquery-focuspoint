@@ -123,7 +123,7 @@
 		var transform = ($el.data('transform') === 'true');
 		//Is it a video?
 		if ( $image.length == 0 ) {
-			$image = $el.find('video').first();
+			$image = $this.find('video').first();
 			transform = false;
 		}
 		
