@@ -110,7 +110,7 @@
 		var containerH = $el.height();
 		var focusX = parseFloat($el.data('focusX'));
 		var focusY = parseFloat($el.data('focusY'));
-		var $image = $el.find('img').first();
+		var $image = $el.find('img, video').first();
 
 		//Amount position will be shifted
 		var hShift = 0;
@@ -121,11 +121,6 @@
 		var scale = 1;
 		//Do we use transform?
 		var transform = ($el.data('transform') === 'true');
-		//Is it a video?
-		if ( $image.length == 0 ) {
-			$image = $this.find('video').first();
-			transform = false;
-		}
 		
 		if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
 			return false; //Need dimensions to proceed
