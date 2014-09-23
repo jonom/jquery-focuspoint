@@ -117,7 +117,7 @@ In order for this concept of 'fluid cropping' to work well, your images will nee
 
 #### Pure CSS alternative
 
-You can get a similar effect to this technique using only CSS and the `background-position` and `background-size` properties. Browser support isn't as good (at the moment) and your image won't be positioned exactly the same way - but it's pretty close. The CSS technique leans towards preserving the original composition while FocusPoint is biased towards keeping the subject of the image in the centre of the frame. Depending on your requirements either technique may suit you better.
+You can get a similar effect to this technique using only CSS. Browser support is good, though IE8, Safari <=6.1, Android <= 4.3 are [incompatable with `background-position` edge offsets](http://caniuse.com/#feat=css-background-offsets). Your image won't be positioned exactly the same way as this plugin, but is very close. The CSS technique leans towards preserving the original composition while FocusPoint is biased towards keeping the subject of the image in the centre of the frame. Depending on your requirements either technique may suit you better.
 
 * [Pure CSS example and comparison](http://jonom.github.io/jquery-focuspoint/demos/css-js-comparison/index.html)
 * [Helper tool for calculating CSS values](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html)
