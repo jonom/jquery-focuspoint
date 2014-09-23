@@ -1,6 +1,13 @@
-/* CSS Only Fallbacks - if you're a purist you can use 
- * these classes on your container divs to get an approximate 
- * focus effect when javascript isn't available
+/*
+* CSS Only FocusPoint; version: 1.0.0
+* http://jonathonmenz.com
+* https://github.com/jonom/jquery-focuspoint
+* (c) 2014 J. Menz; MIT License
+* @preserve
+*/
+/* Instructions:
+ * Add one these classes on your container divs to get an
+ * approximate focus effect (when not using JavaScript to center).
  *-----------------------------------------*/
 
 /* Reset default positioning */
