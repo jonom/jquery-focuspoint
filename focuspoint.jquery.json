@@ -13,7 +13,7 @@
         "focus",
         "focuspoint"
     ],
-    "version": "1.1.0",
+    "version": "1.1.1",
     "author": {
         "name": "Jonathon Menz",
         "url": "http://jonathonmenz.com"
@@ -21,7 +21,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/jonom/jquery-focuspoint/blob/1.1.0/MIT-LICENSE.txt"
+            "url": "https://github.com/jonom/jquery-focuspoint/blob/1.1.1/MIT-LICENSE.txt"
         }
     ],
     "bugs": "https://github.com/jonom/jquery-focuspoint/issues",

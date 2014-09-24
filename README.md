@@ -136,6 +136,8 @@ If FocusPoint helped you impress a client and you want to say thanks, you're wel
 
 ## Changelog
 
+#### v1.1.1 2014-09-23
+Minor fixes
 #### v1.1.0 2014-09-18
 Refactored code (thanks @xat)  
 Added ability to start/stop window-resize listener (thanks @xat)  
