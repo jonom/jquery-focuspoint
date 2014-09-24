@@ -93,13 +93,13 @@
 		var hShift = 0;
 		var vShift = 0;
 
-		//Which is over by more?
-		var wR = imageW / containerW;
-		var hR = imageH / containerH;
-
 		if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
 			return false; //Need dimensions to proceed
 		}
+
+		//Which is over by more?
+		var wR = imageW / containerW;
+		var hR = imageH / containerH;
 
 		//Reset max-width and -height
 		$image.css({
