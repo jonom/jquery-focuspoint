@@ -13,13 +13,6 @@
 		throttleDuration: 17 //ms - set to 0 to disable throttling
 	};
 
-	//Fallback css classes
-	var focusCssClasses = [
-		'focus-left-top', 'focus-left-center', 'focus-left-bottom',
-		'focus-center-top', 'focus-center-center', 'focus-center-bottom',
-		'focus-right-top', 'focus-right-center', 'focus-right-bottom'
-	];
-
 	//Setup a container instance
 	var setupContainer = function($el) {
 		var imageSrc = $el.find('img').attr('src');
@@ -139,7 +132,6 @@
 			: function(){adjustFocus($el);};//Only throttle when desired
 		var isListening = false;
 
-		$el.removeClass(focusCssClasses.join(' ')); //Replace basic css positioning with more accurate version
 		adjustFocus($el); //Focus image in container
 
 		//Expose a public API
