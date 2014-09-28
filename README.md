@@ -96,7 +96,7 @@ $('.focuspoint').focusPoint({
 
 #### FocusPoint functions
 
-Once you have initialised FocusPoint on an image container you can access FocusPoint methods like this: `$(someContainer).data('focusPoint').methodName()`.
+Once you have initialized FocusPoint on an image container you can access FocusPoint methods like this: `$(someContainer).data('focusPoint').methodName()`.
 
 Or the shorter way, like this: `$(someContainer).focusPoint('methodName')`
 
