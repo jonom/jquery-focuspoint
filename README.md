@@ -132,15 +132,16 @@ Nothing would encourage me to keep updating this script more than hearing how it
 
 **Note:** To date I'm not yet aware of any live websites (apart from my own) that use this plugin - so please get in touch if you launch a site that uses FocusPoint!
 
-#### Feeling generous?
+#### Tip jar
 
-If FocusPoint helped you impress a client and you want to say thanks, you're welcome to [leave a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC) to help fund the purchase of coffee, which will help facilitate future development. But that is totally optional.
+If FocusPoint helped you impress a client and you want to say thanks, you're welcome to [leave a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC) to help fund the purchase of coffee, which will help me stay awake during future development.
 
 [<img src="https://www.paypalobjects.com/en_AU/i/btn/btn_donate_LG.gif" alt="Donate">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC)
 
-Donations received so far: **2**  
-Which generated this many warm fuzzies: **2**  
-And paid for this many caffé lattes: **4**  
+Donations received: **3**  
+Warm fuzzies generated: **3**  
+Caffé Lattes funded: **10**  
+**Thanks!** Daniil, Cohan
 
 ## Changelog
 
