@@ -138,10 +138,9 @@ If FocusPoint helped you impress a client and you want to say thanks, you're wel
 
 [<img src="https://www.paypalobjects.com/en_AU/i/btn/btn_donate_LG.gif" alt="Donate">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC)
 
-Donations received: **3**  
-Warm fuzzies generated: **3**  
-Caffé Lattes funded: **10**  
-**Thanks!** Daniil, Cohan
+Donations received / Warm fuzzies generated: **6**  
+Caffé Lattes funded: **17** :coffee: :relieved:  
+**Thanks!** Daniil, Cohan, Romulo, Lemuel, David
 
 ## Changelog
 
