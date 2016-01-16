@@ -1,11 +1,21 @@
 /* !CONTAINERS */
 /*-----------------------------------------*/
 
-.focuspoint {
-	height: 200px;
+.test {
 	margin-bottom: 20px;
+	position: relative;
 }
-.focuspoint .label {
+.test:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.focuspoint {
+	float: left;
+	width: 50%;
+	height: 200px;
+}
+.test .label {
 	position: absolute;
 	left: 0;
 	bottom: 0;
