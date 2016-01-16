@@ -11,7 +11,8 @@
 
 	var defaults = {
 		reCalcOnWindowResize: true,
-		throttleDuration: 17 //ms - set to 0 to disable throttling
+		throttleDuration: 17, //ms - set to 0 to disable throttling
+		setTransformOrigin: true
 	};
 
 	//Setup a container instance
@@ -181,6 +182,16 @@
 		return this.each(function() {
 			var $el = $(this);
 			var fp = focusPoint($el, settings);
+			//Set transform origin
+			if (settings.setTransformOrigin) {
+				var transformX = ($el.data('focusX')*50)+50;
+				var transformY = 50-($el.data('focusY')*50);
+				var transformOrigin = transformX + '% ' + transformY + '%';
+				$el.find('img').css({
+					'webkit-transform-origin': transformOrigin,
+					'transform-origin': transformOrigin
+				});
+			}
 			//Stop the resize event of any previous attached
 			//focusPoint instances
 			if ($el.data('focusPoint')) $el.data('focusPoint').windowOff();

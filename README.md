@@ -85,6 +85,7 @@ FocusPoint comes with a few options you can change to suit your needs.
 | ---------------------- | --------------------- | ------- | ----------- |
 | `reCalcOnWindowResize` | `true` or `false`     | `true`  | Whether or not to re-adjust image when the window is resized |
 | `throttleDuration`     | Int e.g. `0` or `100` | `17`    | Throttling rate in milliseconds. Set to `0` to disable throttling. |
+| `setTransformOrigin`   | `true` or `false`     | `true`  | Whether or not to set the images transform origin to match the focus point. This allows for easy zooming from the focus point with css transforms. |
 
 Example usage:
 
