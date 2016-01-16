@@ -15,6 +15,9 @@
 	width: 50%;
 	height: 200px;
 }
+img {
+	transition: transform .5s;
+}
 .test .label {
 	position: absolute;
 	left: 0;
