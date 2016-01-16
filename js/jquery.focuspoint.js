@@ -1,11 +1,12 @@
 /**
- * jQuery FocusPoint; version: 1.1.1
+ * jQuery FocusPoint; version: dev
  * Author: http://jonathonmenz.com
  * Source: https://github.com/jonom/jquery-focuspoint
  * Copyright (c) 2014 J. Menz; MIT License
  * @preserve
  */
 ;
+
 (function($) {
 
 	var defaults = {
@@ -97,27 +98,35 @@
 			return false; //Need dimensions to proceed
 		}
 
-		//Which is over by more?
+		//Ratios
 		var wR = imageW / containerW;
 		var hR = imageH / containerH;
-
-		//Reset max-width and -height
-		$image.css({
-			'max-width': '',
-			'max-height': ''
-		});
-
-		//Minimize image while still filling space
-		if (imageW > containerW && imageH > containerH) {
-			$image.css((wR > hR) ? 'max-height' : 'max-width', '100%');
-		}
-
+		var whR = imageW / imageH;
+		
+		//Scale image
 		if (wR > hR) {
+			//Clip on x axis
+			$image.css({
+				'width': ((containerH * 100 * whR) / containerW) + '%',
+				'height': '100%'
+			});
 			hShift = calcShift(hR, containerW, imageW, focusX);
 		} else if (wR < hR) {
+			//Clip on y axis
+			$image.css({
+				'width': '100%',
+				'height': ((containerW * 100 / whR) / containerH) + '%'
+			});
 			vShift = calcShift(wR, containerH, imageH, focusY, true);
+		} else {
+			//No clipping
+			$image.css({
+				'width': '100%',
+				'height': '100%'
+			});
 		}
-
+		
+		//Position image
 		$image.css({
 			top: vShift,
 			left: hShift
