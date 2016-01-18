@@ -1,56 +1,28 @@
 /**
  * jQuery FocusPoint; version: dev
- * Author: http://jonathonmenz.com
+ * Author: J. Menz http://jonathonmenz.com
  * Source: https://github.com/jonom/jquery-focuspoint
- * Copyright (c) 2014 J. Menz; MIT License
+ * Copyright (c) 2014 - 2016 J. Menz; MIT License
  * @preserve
  */
-;
-
-(function($) {
-
+;(function ( $, window, document, undefined ) {
+	
 	var defaults = {
 		reCalcOnWindowResize: true,
-		throttleDuration: 17, //ms - set to 0 to disable throttling
-		setTransformOrigin: true
+		setTransformOrigin: true,
+		gridOrigin: 'left-top' // 'center' or 'left-top'
 	};
+	var $resizeElements = $(); // Which focuspoint containers are listening to resize event
+	var throttleDuration = 17; // ms - set to 0 to disable throttling
 
-	//Setup a container instance
-	var setupContainer = function($el) {
-		var imageSrc = $el.find('img').attr('src');
-		$el.data('imageSrc', imageSrc);
-
-		resolveImageSize(imageSrc, function(err, dim) {
-			$el.data({
-				imageW: dim.width,
-				imageH: dim.height
-			});
-			adjustFocus($el);
-		});
-	};
-
-	//Get the width and the height of an image
-	//by creating a new temporary image
-	var resolveImageSize = function(src, cb) {
-		//Create a new image and set a
-		//handler which listens to the first
-		//call of the 'load' event.
-		$('<img />').one('load', function() {
-			//'this' references to the new
-			//created image
-			cb(null, {
-				width: this.width,
-				height: this.height
-			});
-		}).attr('src', src);
-	};
-
-	//Create a throttled version of a function
+	// Create a throttled version of a function
 	var throttle = function(fn, ms) {
 		var isRunning = false;
 		return function() {
 			var args = Array.prototype.slice.call(arguments, 0);
-			if (isRunning) return false;
+			if (isRunning) {
+				return false;
+			}
 			isRunning = true;
 			setTimeout(function() {
 				isRunning = false;
@@ -58,154 +30,212 @@
 			}, ms);
 		};
 	};
-
-	//Calculate the new left/top values of an image
-	var calcShift = function(conToImageRatio, containerSize, imageSize, focusSize, toMinus) {
-		var containerCenter = Math.floor(containerSize / 2); //Container center in px
-		var focusFactor = (focusSize + 1) / 2; //Focus point of resize image in px
-		var scaledImage = Math.floor(imageSize / conToImageRatio); //Can't use width() as images may be display:none
-		var focus =  Math.floor(focusFactor * scaledImage);
-		if (toMinus) focus = scaledImage - focus;
-		var focusOffset = focus - containerCenter; //Calculate difference between focus point and center
-		var remainder = scaledImage - focus; //Reduce offset if necessary so image remains filled
-		var containerRemainder = containerSize - containerCenter;
-		if (remainder < containerRemainder) focusOffset -= containerRemainder - remainder;
-		if (focusOffset < 0) focusOffset = 0;
-
-		return (focusOffset * -100 / containerSize)  + '%';
-	};
-
-	//Re-adjust the focus
-	var adjustFocus = function($el) {
-		var imageW = $el.data('imageW');
-		var imageH = $el.data('imageH');
-		var imageSrc = $el.data('imageSrc');
-
-		if (!imageW && !imageH && !imageSrc) {
-			return setupContainer($el); //Setup the container first
-		}
-
-		var containerW = $el.width();
-		var containerH = $el.height();
-		var focusX = parseFloat($el.data('focusX'));
-		var focusY = parseFloat($el.data('focusY'));
-		var $image = $el.find('img').first();
-
-		//Amount position will be shifted
-		var hShift = 0;
-		var vShift = 0;
-
-		if (!(containerW > 0 && containerH > 0 && imageW > 0 && imageH > 0)) {
-			return false; //Need dimensions to proceed
-		}
-
-		//Ratios
-		var wR = imageW / containerW;
-		var hR = imageH / containerH;
-		var whR = imageW / imageH;
-		
-		//Scale image
-		if (wR > hR) {
-			//Clip on x axis
-			$image.css({
-				'width': ((containerH * 100 * whR) / containerW) + '%',
-				'height': '100%'
-			});
-			hShift = calcShift(hR, containerW, imageW, focusX);
-		} else if (wR < hR) {
-			//Clip on y axis
-			$image.css({
-				'width': '100%',
-				'height': ((containerW * 100 / whR) / containerH) + '%'
-			});
-			vShift = calcShift(wR, containerH, imageH, focusY, true);
-		} else {
-			//No clipping
-			$image.css({
-				'width': '100%',
-				'height': '100%'
-			});
-		}
-		
-		//Position image
-		$image.css({
-			top: vShift,
-			left: hShift
-		});
-	};
-
-	var $window = $(window);
-
-	var focusPoint = function($el, settings) {
-		var thrAdjustFocus = settings.throttleDuration ?
-			throttle(function(){adjustFocus($el);}, settings.throttleDuration)
-			: function(){adjustFocus($el);};//Only throttle when desired
-		var isListening = false;
-
-		adjustFocus($el); //Focus image in container
-
-		//Expose a public API
-		return {
-
-			adjustFocus: function() {
-				return adjustFocus($el);
-			},
-
-			windowOn: function() {
-				if (isListening) return;
-				//Recalculate each time the window is resized
-				$window.on('resize', thrAdjustFocus);
-				return isListening = true;
-			},
-
-			windowOff: function() {
-				if (!isListening) return;
-				//Stop listening to the resize event
-				$window.off('resize', thrAdjustFocus);
-				isListening = false;
-				return true;
+	
+	// Single resize listener for all focus point instances
+	var updateResizeListener = function() {
+		$(window).off('resize.focuspoint');
+		if ($resizeElements.length) {
+			if (throttleDuration > 0) {
+				$(window).on('resize.focuspoint', throttle(function(){
+					$resizeElements.focusPoint('adjustFocus');
+				}, throttleDuration));
 			}
-
-		};
+			else {
+				$(window).on('resize.focuspoint', function(){
+					$resizeElements.focusPoint('adjustFocus');
+				});
+			}
+		}
+	};
+	
+	// For sorting
+	var compareNumbers = function(a, b) {
+		return a - b;
 	};
 
-	$.fn.focusPoint = function(optionsOrMethod) {
-		//Shortcut to functions - if string passed assume method name and execute
+	// The FocusPoint plugin constructor
+	function FocusPoint ( element, options ) {
+		this.element = element;
+		this.settings = $.extend( {}, defaults, options );
+		this.init();
+	}
+
+	// Avoid Plugin.prototype conflicts
+	$.extend(FocusPoint.prototype, {
+		init: function () {
+			// Set up the values which won't change
+			this.$el = $(this.element);
+			this.$image = this.$el.find('img').first();
+			this.imageW = this.$el.data('imageW');
+			this.imageH = this.$el.data('imageH');
+			this.imageRatio = this.imageW / this.imageH;
+			
+			// Determine image dimensions if missing
+			if (!this.imageW && !this.imageH) {
+				return this.resolveImageSize();
+			}
+			
+			// Separate and sanitise focus points.
+			// There may be one or two focus coordinates per axis, defining a single point or area
+			var fp = this;
+			$.each(['X','Y'], function( index, axis ) {
+				fp['focus' + axis] = String(fp.$el.data('focus' + axis)).split(',');
+				// Make numeric
+				$.each(fp['focus' + axis], function( index, value ) {
+					fp['focus' + axis][index] = parseFloat(value.trim());
+					// Account for classic grid
+					if (fp.settings.gridOrigin === 'center') {
+						if (axis === 'X') {
+							fp['focus' + axis][index] = (fp['focus' + axis][index] + 1)*0.5;
+						} 
+						else {
+							fp['focus' + axis][index] = (fp['focus' + axis][index] - 1)*-0.5;
+						}
+					}
+				});
+				// Set ranges
+				if (fp['focus' + axis].length > 1) {
+					fp['focus' + axis].sort(compareNumbers);
+					fp['focus' + axis + 'MinStart'] = fp['focus' + axis][0];
+					fp['focus' + axis + 'MinStop'] = fp['focus' + axis][1];
+					fp['focus' + axis] = (fp['focus' + axis][0] + fp['focus' + axis][1]) / 2;
+				} 
+				else {
+					fp['focus' + axis + 'MinStart'] = fp['focus' + axis + 'MinStop'] = fp['focus' + axis] = fp['focus' + axis][0];
+				}
+				// Min cropping region ratios
+				fp['maxScaleRatio' + axis] = 1 / (fp['focus' + axis + 'MinStop'] - fp['focus' + axis + 'MinStart']);
+			});
+			
+			// Set transform origin
+			if (this.settings.setTransformOrigin) {
+				var transformOrigin = (fp.focusX * 100) + '% ' + (fp.focusY * 100) + '%';
+				this.$image.css({
+					'webkit-transform-origin': transformOrigin,
+					'transform-origin': transformOrigin
+				});
+			}
+			// Mark active
+			this.$el.addClass('focuspoint-active');
+			// Focus image in container
+			this.adjustFocus();
+			// Adjust on resize
+			if (this.settings.reCalcOnWindowResize) {
+				this.windowOn();
+			}
+		},
+		// Get the width and the height of an image by creating a new temporary image
+		resolveImageSize: function() {
+			// Don't try this more than once
+			if (this.triedAutoResolution) {
+				return false;
+			}
+			this.triedAutoResolution = true;
+			// Create a new image and set a handler which listens to the first call of the 'load' event.
+			var $el = this.$el;
+			$('<img />').one('load', function() {
+				// 'this' references to the new created image
+				$el.data('imageW', this.width);
+				$el.data('imageH', this.height);
+				$el.focusPoint('init');
+			}).attr('src', this.$image.attr('src'));
+		},
+		// Adjust focus automatically when screen is resized
+		windowOn: function() {
+			$resizeElements = $resizeElements.add(this.element);
+			updateResizeListener();
+		},
+		// Cancel automatic adjustments
+		windowOff: function() {
+			$resizeElements = $resizeElements.not(this.element);
+			updateResizeListener();
+		},
+		// Change the throttling duration (affects all instances)
+		setThrottleDuration: function(ms) {
+			throttleDuration = ms;
+			updateResizeListener();
+		},
+		// Optimally position image in container
+		adjustFocus: function() {
+			// Store all the cropping data in one var for easy debugging
+			var data = {};
+			var a = false; // Clipping axis
+			data.containerW = this.$el.width();
+			data.containerH = this.$el.height();
+			if (!(data.containerW > 0 && data.containerH > 0 && this.imageW > 0 && this.imageH > 0)) {
+				return false; //Need dimensions to proceed
+			}
+			data.containerRatio = data.containerW / data.containerH;
+			data.scale = 1;
+			data.shiftPrimary = 0;
+			data.shiftSecondary = 0;
+			data.clippingAxis = false;
+			data.axisScale = {
+				X: this.imageRatio / data.containerRatio,
+				Y: data.containerRatio / this.imageRatio
+			};
+			
+			// Scale and position image
+			if (this.imageRatio > data.containerRatio) {
+				a = data.clippingAxis = 'X';
+			}
+			else if (this.imageRatio < data.containerRatio) {
+				a = data.clippingAxis = 'Y';
+			}
+			if (a) {
+				if (this['maxScaleRatio' + a] && data.axisScale[a] > this['maxScaleRatio' + a]) {
+					// Need to scale down image to fit min cropping region in frame
+					data.scale = this['maxScaleRatio' + a] / data.axisScale[a];
+					data.shiftSecondary = ((1 - data.scale) * 50) + '%';
+					data.shiftPrimary = (this['focus' + a + 'MinStart'] * -100 * data.axisScale[a] * data.scale) + '%';
+				}
+				else {
+					// Move image so focus point is in center of frame
+					data.shiftPrimary = 0.5 - (this['focus' + a] * data.axisScale[a]);
+					// Make sure image fills frame
+					data.spareNeg = (data.axisScale[a] - 1) * -1;
+					if (data.shiftPrimary > 0) {
+						data.shiftPrimary = 0;
+					}
+					else if (data.shiftPrimary < 0 && data.shiftPrimary < data.spareNeg) {
+						data.shiftPrimary = data.spareNeg;
+					}
+					data.shiftPrimary = (data.shiftPrimary * 100)  + '%';
+				}
+				this.$image.css((a === 'X') ? 'width' : 'height', (data.axisScale[a] * data.scale * 100) + '%');
+				this.$image.css((a === 'X') ? 'height' : 'width', (data.scale * 100) + '%');
+				this.$image.css((a === 'X') ? 'left' : 'top', data.shiftPrimary);
+				this.$image.css((a === 'X') ? 'top' : 'left', data.shiftSecondary);
+			}
+			else {
+				// No clipping
+				this.$image.css({
+					'width': '100%',
+					'height': '100%',
+					'left': 0,
+					'top': 0
+				});
+			}
+		}
+	});
+
+	// Plugin wrapper around the constructor, preventing against multiple instantiations
+	$.fn.focusPoint = function ( optionsOrMethod ) {
+		this.each(function() {
+			if ( !$.data( this, "focusPoint" ) ) {
+				$.data( this, "focusPoint", new FocusPoint( this, optionsOrMethod ) );
+			}
+		});
+		// Shortcut to functions - if string passed assume method name and execute
 		if (typeof optionsOrMethod === 'string') {
 			return this.each(function() {
 				var $el = $(this);
 				$el.data('focusPoint')[optionsOrMethod]();
 			});
 		}
-		//Otherwise assume options being passed and setup
-		var settings = $.extend({}, defaults, optionsOrMethod);
-		return this.each(function() {
-			var $el = $(this);
-			var fp = focusPoint($el, settings);
-			//Set transform origin
-			if (settings.setTransformOrigin) {
-				var transformX = ($el.data('focusX')*50)+50;
-				var transformY = 50-($el.data('focusY')*50);
-				var transformOrigin = transformX + '% ' + transformY + '%';
-				$el.find('img').css({
-					'webkit-transform-origin': transformOrigin,
-					'transform-origin': transformOrigin
-				});
-			}
-			//Stop the resize event of any previous attached
-			//focusPoint instances
-			if ($el.data('focusPoint')) $el.data('focusPoint').windowOff();
-			$el.data('focusPoint', fp);
-			if (settings.reCalcOnWindowResize) fp.windowOn();
-		});
 
+		// Chain jQuery functions
+		return this;
 	};
 
-	$.fn.adjustFocus = function() {
-		//Deprecated v1.2
-		return this.each(function() {
-			adjustFocus($(this));
-		});
-	};
-
-})(jQuery);
+})( jQuery, window, document );

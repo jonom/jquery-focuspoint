@@ -21,10 +21,8 @@
 				$(document).ready(function() {
 					
 					//Activate test cases individually
-					$('#Default .focuspoint, #MissingWH .focuspoint, #Zoom .focuspoint').focusPoint();
-					$('#ThrottleSlow .focuspoint').focusPoint({
-						throttleDuration: 500 //ms
-					});
+					$('#Default .focuspoint, #MissingWH .focuspoint, #Zoom .focuspoint, #MinRegion .focuspoint').focusPoint();
+					$('#LegacyGrid .focuspoint').focusPoint({gridOrigin: 'center'});
 					$('#Zoom a').click(function(e){
 						e.preventDefault();
 						var scaleCSS = 'scale(' + $(this).data('scale') + ')';
@@ -34,9 +32,6 @@
 							'transform': scaleCSS
 						});
 					}).get(2).click();
-					$('#NoThrottle .focuspoint').focusPoint({
-						throttleDuration: 0 //ms
-					});
 					$('#NoResize .focuspoint').focusPoint({
 						reCalcOnWindowResize : false
 					});
@@ -44,16 +39,24 @@
 						$('#NoResize .focuspoint').focusPoint('adjustFocus'); //Short for .data('focusPoint').adjustFocus();
 						return false;
 					});
-					$('#NoResize a.adjust2').click(function(){
-						$('#NoResize .focuspoint').adjustFocus(); //Old method
-						return false;
-					});
-					$('#NoResize a.start').click(function(){
+					$('#NoResize a.resize-on').click(function(){
 						$('#NoResize .focuspoint').focusPoint('windowOn');
 						return false;
 					});
-					$('#NoResize a.stop').click(function(){
+					$('#NoResize a.resize-off').click(function(){
 						$('#NoResize .focuspoint').focusPoint('windowOff');
+						return false;
+					});
+					$('#NoResize a.throttle-slow').click(function(){
+						$('#NoResize .focuspoint').data('focusPoint').setThrottleDuration(500);
+						return false;
+					});
+					$('#NoResize a.throttle-fast').click(function(){
+						$('#NoResize .focuspoint').data('focusPoint').setThrottleDuration(20);
+						return false;
+					});
+					$('#NoResize a.throttle-off').click(function(){
+						$('#NoResize .focuspoint').data('focusPoint').setThrottleDuration(0);
 						return false;
 					});
 					
@@ -70,15 +73,15 @@
 	
 			<div id="Default" class="test">
 				<div class="focuspoint"
-				data-focus-x="0.33"
-				data-focus-y="0.249"
+				data-focus-x="0.665"
+				data-focus-y="0.3755"
 				data-image-w="922"
 				data-image-h="666">
 					<img src="../img/lizard.jpg" alt="" />
 				</div>
 				<div class="focuspoint"
-				data-focus-x="0.29"
-				data-focus-y="-0.284"
+				data-focus-x="0.645"
+				data-focus-y="0.642"
 				data-image-w="667"
 				data-image-h="1000">
 					<img src="../img/bird.jpg" alt="" />
@@ -86,67 +89,67 @@
 				<span class="label">Default behaviour</span>
 			</div>
 	
-			<div id="MissingWH" class="test">
+			<div id="LegacyGrid" class="test">
 				<div class="focuspoint"
 				data-focus-x="0.33"
-				data-focus-y="0.249">
+				data-focus-y="0.249"
+				data-image-w="922"
+				data-image-h="666">
 					<img src="../img/lizard.jpg" alt="" />
 				</div>
 				<div class="focuspoint"
 				data-focus-x="0.29"
-				data-focus-y="-0.284">
+				data-focus-y="-0.284"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird.jpg" alt="" />
+				</div>
+				<span class="label">Legacy grid</span>
+			</div>
+	
+			<div id="MinRegion" class="test">
+				<div class="focuspoint"
+				data-focus-x=".9555,.401"
+				data-focus-y=".1565,.698"
+				data-image-w="922"
+				data-image-h="666">
+					<img src="../img/lizard-min.jpg" alt="" />
+				</div>
+				<div class="focuspoint"
+				data-focus-x="0.46, 0.774"
+				data-focus-y="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+				</div>
+				<span class="label">Minimum cropping region</span>
+			</div>
+	
+			<div id="MissingWH" class="test">
+				<div class="focuspoint"
+				data-focus-x="0.665"
+				data-focus-y="0.3755">
+					<img src="../img/lizard.jpg" alt="" />
+				</div>
+				<div class="focuspoint"
+				data-focus-x="0.645"
+				data-focus-y="0.642">
 					<img src="../img/bird.jpg" alt="" />
 				</div>
 				<span class="label">Missing image-w and image-h</span>
 			</div>
 	
-			<div id="ThrottleSlow" class="test">
-				<div class="focuspoint"
-				data-focus-x="0.33"
-				data-focus-y="0.249"
-				data-image-w="922"
-				data-image-h="666">
-					<img src="../img/lizard.jpg" alt="" />
-				</div>
-				<div class="focuspoint"
-				data-focus-x="0.29"
-				data-focus-y="-0.284"
-				data-image-w="667"
-				data-image-h="1000">
-					<img src="../img/bird.jpg" alt="" />
-				</div>
-				<span class="label">Slow redraw (high throttleDuration)</span>
-			</div>
-	
-			<div id="NoThrottle" class="test">
-				<div class="focuspoint"
-				data-focus-x="0.33"
-				data-focus-y="0.249"
-				data-image-w="922"
-				data-image-h="666">
-					<img src="../img/lizard.jpg" alt="" />
-				</div>
-				<div class="focuspoint"
-				data-focus-x="0.29"
-				data-focus-y="-0.284"
-				data-image-w="667"
-				data-image-h="1000">
-					<img src="../img/bird.jpg" alt="" />
-				</div>
-				<span class="label">No throttling</span>
-			</div>
-	
 			<div id="Zoom" class="test">
 				<div class="focuspoint"
-				data-focus-x="0.33"
-				data-focus-y="0.249"
+				data-focus-x="0.665"
+				data-focus-y="0.3755"
 				data-image-w="922"
 				data-image-h="666">
 					<img src="../img/lizard.jpg" alt="" />
 				</div>
 				<div class="focuspoint"
-				data-focus-x="0.29"
-				data-focus-y="-0.284"
+				data-focus-x="0.645"
+				data-focus-y="0.642"
 				data-image-w="667"
 				data-image-h="1000">
 					<img src="../img/bird.jpg" alt="" />
@@ -160,24 +163,26 @@
 	
 			<div id="NoResize" class="test">
 				<div class="focuspoint"
-				data-focus-x="0.33"
-				data-focus-y="0.249"
+				data-focus-x="0.665"
+				data-focus-y="0.3755"
 				data-image-w="922"
 				data-image-h="666">
 					<img src="../img/lizard.jpg" alt="" />
 				</div>
 				<div class="focuspoint"
-				data-focus-x="0.29"
-				data-focus-y="-0.284"
+				data-focus-x="0.645"
+				data-focus-y="0.642"
 				data-image-w="667"
 				data-image-h="1000">
 					<img src="../img/bird.jpg" alt="" />
 				</div>
 				<span class="label">Don't adjust on window resize 
 					<a href="#" class="adjust">» Adjust Focus</a>
-					<a href="#" class="adjust2">» Adjust Focus (old method)</a>
-					<a href="#" class="start">» Window On</a>
-					<a href="#" class="stop">» Window Off</a>
+					<a href="#" class="resize-on">» Resize listening On</a>
+					<a href="#" class="resize-off">» Resize listening Off</a>
+					<a href="#" class="throttle-fast">» Throttle fast</a>
+					<a href="#" class="throttle-slow">» Throttle slow</a>
+					<a href="#" class="throttle-off">» Throttle off</a>
 				</span>
 			</div>
 	

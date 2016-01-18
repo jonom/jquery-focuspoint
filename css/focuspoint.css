@@ -15,3 +15,7 @@
 	min-width: 100%; min-height: 100%;
 	max-height: none; max-width: none;
 }
+.focuspoint-active img {
+	min-width: 0;
+	min-height: 0;
+}

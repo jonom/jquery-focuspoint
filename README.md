@@ -1,5 +1,7 @@
 # jQuery FocusPoint
 
+ToDo: This needs updating!
+
 ## Intelligent cropping for flexible image containers
 
 ![image](demos/img/demo.jpg?raw=true)
@@ -28,7 +30,6 @@ And here is a [full screen](http://jonom.github.io/jquery-focuspoint/demos/full-
 The idea is that most images have a focal point or subject that is the most important part of the image. In the case of a traditional portrait photo this would be the subject's face (or specifically the spot right between their eyes). In the image above it's arguably the point halfway between the two people's faces.
 
 FocusPoint requires you to indicate where this focal point is located within your image, and then works in the background to ensure that point is never cropped out.
-
 
 ## How to use
 
