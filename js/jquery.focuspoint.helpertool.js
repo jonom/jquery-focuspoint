@@ -119,8 +119,8 @@
 			//Calculate FocusPoint coordinates
 			var offsetX = e.pageX - $(this).offset().left;
 			var offsetY = e.pageY - $(this).offset().top;
-			var focusX = (offsetX/imageW - .5)*2;
-			var focusY = (offsetY/imageH - .5)*-2;
+			var focusX = offsetX/imageW;
+			var focusY = offsetY/imageH;
 			focusPointAttr.x = focusX;
 			focusPointAttr.y = focusY;
 
@@ -168,19 +168,12 @@
 		
 		function updateFocusPoint(){
 			/*-----------------------------------------*/
-			// See note in setImage() function regarding these attribute assignments.
-			//TLDR - You don't need them for this to work.
-			/*-----------------------------------------*/
-			$focusPointContainers.attr({
-				'data-focus-x': focusPointAttr.x,
-				'data-focus-y': focusPointAttr.y
-			});			
-			/*-----------------------------------------*/
-			// These you DO need :)
+			// Re-initialise each container as focuspoint may have changed
 			/*-----------------------------------------*/
 			$focusPointContainers.data('focusX', focusPointAttr.x);
 			$focusPointContainers.data('focusY', focusPointAttr.y);
-			$focusPointContainers.adjustFocus();
+			$focusPointContainers.focusPoint('init');
+			$focusPointContainers.focusPoint('adjustFocus');
 		};
 	});
 }(jQuery));

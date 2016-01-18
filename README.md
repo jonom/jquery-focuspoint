@@ -1,14 +1,6 @@
 # jQuery FocusPoint
 
-## FocusPoint 2
-
-I started work on a major update to this plugin a couple of years ago, but it has been in limbo for a while and probably won't be picked up again unless someone wants to sponsor the work (please [get in touch](http://jonathonmenz.com) if you do!). I didn't get as far as removing the jQuery dependancy but please feel free to use the v-2-dev branch to benefit from a few new features:
-
-* Better resizing performance
-* More familiar coordinate system (like that used in CSS)
-* Suppor for ideal and minimum cropping region
-
-If you love this plugin feel free to send me an encouraging email or consider sponsoring an update. You're also welcome to make a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC) if you like. I receive an average of one per year, so it won't go unnoticed. 😄💰
+ToDo: This needs updating!
 
 ## Intelligent cropping for flexible image containers
 
@@ -38,7 +30,6 @@ And here is a [full screen](http://jonom.github.io/jquery-focuspoint/demos/full-
 The idea is that most images have a focal point or subject that is the most important part of the image. In the case of a traditional portrait photo this would be the subject's face (or specifically the spot right between their eyes). In the image above it's arguably the point halfway between the two people's faces.
 
 FocusPoint requires you to indicate where this focal point is located within your image, and then works in the background to ensure that point is never cropped out.
-
 
 ## How to use
 
@@ -149,8 +140,8 @@ If FocusPoint helped you impress a client and you want to say thanks, you're wel
 
 [<img src="https://www.paypalobjects.com/en_AU/i/btn/btn_donate_LG.gif" alt="Donate">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC)
 
-Donations received / Warm fuzzies generated: **6**  
-Caffé Lattes funded: **17** :coffee: :relieved:  
+Donations received / Warm fuzzies generated: **6**
+Caffé Lattes funded: **17** :coffee: :relieved:
 **Thanks!** Daniil, Cohan, Romulo, Lemuel, David
 
 ## Changelog
@@ -158,9 +149,9 @@ Caffé Lattes funded: **17** :coffee: :relieved:
 #### v1.1.1 2014-09-23
 Minor fixes
 #### v1.1.0 2014-09-18
-Refactored code (thanks @xat)  
-Added ability to start/stop window-resize listener (thanks @xat)  
-Use % instead of px for positioning, for better scaling  
+Refactored code (thanks @xat)
+Added ability to start/stop window-resize listener (thanks @xat)
+Use % instead of px for positioning, for better scaling
 Added shortcuts to plugin methods
 #### v1.0.3 2014-09-06
 Throttled window resize updates

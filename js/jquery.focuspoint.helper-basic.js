@@ -11,8 +11,8 @@
 			//Calculate FocusPoint coordinates
 			var offsetX = e.pageX - $(this).offset().left;
 			var offsetY = e.pageY - $(this).offset().top;
-			var focusX = (offsetX/imageW - .5)*2;
-			var focusY = (offsetY/imageH - .5)*-2;
+			var focusX = offsetX/imageW;
+			var focusY = offsetY/imageH;
 			
 			//Calculate CSS Percentages
 			var percentageX = (offsetX/imageW)*100;
