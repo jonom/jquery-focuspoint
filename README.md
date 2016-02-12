@@ -1,16 +1,14 @@
-# jQuery FocusPoint
+# jQuery FocusPoint 2
 
-ToDo: This needs updating!
+## Art direction for flexible image containers
 
-## Intelligent cropping for flexible image containers
-
-![image](demos/img/demo.jpg?raw=true)
+![image](demos/img/demo.jpg)
 
 Websites don't have a single layout any more. The space you have for an image may be portrait on a laptop, landscape on a tablet, and square on a mobile - particularly if you're using a full-screen image.
 
 If you have to use the same image file in all these contexts, you might not be happy with the results you get when you 'fill' the allocated space with your image. Your subject might be clipped or completely missing, or just really awkward looking.
 
-FocusPoint makes sure your image looks great in any container, by ensuring the 'spare' parts of your image (negative space) are cropped out before the important parts.
+FocusPoint makes sure your image looks great in any container, by ensuring the most important part of your image always stays within the frame.
 
 For a quick overview of the plugin check out this [video by Petr Tichy](http://youtu.be/Wxmxsw65BQw?t=6m49s).
 
@@ -35,11 +33,11 @@ FocusPoint requires you to indicate where this focal point is located within you
 
 #### 1. Calculate your image's focus point
 
-An image's focus point is made up of x (horizontal) and y (vertical) coordinates. The value of a coordinate can be a number with decimal points anywhere between -1 and +1, where 0 is the centre. X:-1 indicates the left edge of the image, x:1 the right edge. For the y axis, y:1 is the top edge and y:-1 is the bottom.
+An image's focus point is made up of `x` (horizontal) and `y` (vertical) coordinates. The value of a coordinate can be a decimal point number anywhere between `0` and `1` and works similar to positioning in CSS. On the `x` axis `0` means the left edge and `1` means the right, while on the `y` axis `0` means the top and `1` means the bottom. On both axes `0.5` indicates the center.
 
-![image](demos/img/grid.png?raw=true)
+![image](demos/img/grid.png)
 
-**Confused?** Don't worry, there's a handy script included to help you find the focus coordinates of an image with a single click. Check out the [helper tool](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) *(vastly improved courtesy of [@auginator](https://github.com/auginator)).*
+**Sound hard?** Don't worry, you can easily find the focus point coordinates of any image by using the [helper tool](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) *(courtesy of [@auginator](https://github.com/auginator)).*
 
 #### 2. Include javascript and CSS
 
@@ -58,7 +56,7 @@ Specify the image dimensions and focus point coordinates on the image container.
 ```html
 <div class="focuspoint"
 data-focus-x="0.331"
-data-focus-y="-0.224"
+data-focus-y="0.224"
 data-image-w="400"
 data-image-h="300">
 	<img src="image.jpg" alt="" />
@@ -84,9 +82,10 @@ FocusPoint comes with a few options you can change to suit your needs.
 
 | Option                 | Values                | Default | Description |
 | ---------------------- | --------------------- | ------- | ----------- |
-| `reCalcOnWindowResize` | `true` or `false`     | `true`  | Whether or not to re-adjust image when the window is resized |
-| `throttleDuration`     | Int e.g. `0` or `100` | `17`    | Throttling rate in milliseconds. Set to `0` to disable throttling. |
+| `reCalcOnWindowResize` | `true` or `false`     | `true`  | Whether or not to re-adjust image when the window is resized. |
+| `throttleDuration`     | Int e.g. `0` or `100` | `17`    | Throttling rate in milliseconds. Set to `0` to disable throttling. This is a global setting. |
 | `setTransformOrigin`   | `true` or `false`     | `true`  | Whether or not to set the images transform origin to match the focus point. This allows for easy zooming from the focus point with css transforms. |
+| `legacyGrid`   | `true` or `false`     | `false`  | Set to true to use FocusPoint v1 style coordinates and grid system. |
 
 Example usage:
 
@@ -104,9 +103,17 @@ Or the shorter way, like this: `$(someContainer).focusPoint('methodName')`
 
 | Function        | Description |
 | --------------- | ----------- |
-| `adjustFocus()` | Re-do calculations and re-position an image in it's frame. Call if container dimensions change. |
-| `windowOn()`    | Start window event listener and re-focus image when window is resized |
+| `adjustFocus()` | Re-do calculations and re-position an image in it's frame. Should be called when container dimensions change. |
+| `windowOn()`    | Start window event listener to automatically re-focus this image when window is resized |
 | `windowOff()`   | Stop re-focusing image when window is resized |
+
+## Advanced usage
+
+#### Minimum cropping region
+
+Suppose you have an image that looks okay in a square or portrait frame, but it really doesn't work in a landscape container, due to lack of vertical negative space in the image. In that case you might want the image to fill the frame for square or portrait aspect ratios, but only partially fill the frame in landscape ones. You can do this by specifying a minimum cropping region. All you need to do is pass two comma separated `x` coordinates and/or two `y` coordinates instead of one.
+
+![diagram of cropping region](demos/img/minimum-region.png)
 
 #### Using FocusPoint in content sliders
 
@@ -143,21 +150,3 @@ If FocusPoint helped you impress a client and you want to say thanks, you're wel
 Donations received / Warm fuzzies generated: **6**  
 Caffé Lattes funded: **17** :coffee: :relieved:  
 **Thanks!** Daniil, Cohan, Romulo, Lemuel, David
-
-## Changelog
-
-#### v1.1.1 2014-09-23
-Minor fixes
-#### v1.1.0 2014-09-18
-Refactored code (thanks @xat)  
-Added ability to start/stop window-resize listener (thanks @xat)  
-Use % instead of px for positioning, for better scaling  
-Added shortcuts to plugin methods
-#### v1.0.3 2014-09-06
-Throttled window resize updates
-#### v1.0.2 2014-09-05
-Made setting image width and height on shell optional (thanks @luruke)
-#### v1.0.1 2014-09-04
-Cleaned up variables
-#### v1.0.0 2014-08-19
-Initial release

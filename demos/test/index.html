@@ -22,7 +22,7 @@
 					
 					//Activate test cases individually
 					$('#Default .focuspoint, #MissingWH .focuspoint, #Zoom .focuspoint, #MinRegion .focuspoint').focusPoint();
-					$('#LegacyGrid .focuspoint').focusPoint({gridOrigin: 'center'});
+					$('#LegacyGrid .focuspoint').focusPoint({legacyGrid: true});
 					$('#Zoom a').click(function(e){
 						e.preventDefault();
 						var scaleCSS = 'scale(' + $(this).data('scale') + ')';
