@@ -10,10 +10,10 @@
 	var defaults = {
 		reCalcOnWindowResize: true,
 		setTransformOrigin: true,
-		gridOrigin: 'left-top' // 'center' or 'left-top'
+		legacyGrid: false
 	};
 	var $resizeElements = $(); // Which focuspoint containers are listening to resize event
-	var throttleDuration = 17; // ms - set to 0 to disable throttling
+	var throttleDuration = 17; // Same throttle duration for all containers (ms - set to 0 to disable throttling)
 
 	// Create a throttled version of a function
 	var throttle = function(fn, ms) {
@@ -63,6 +63,11 @@
 	// Avoid Plugin.prototype conflicts
 	$.extend(FocusPoint.prototype, {
 		init: function () {
+			// Pass through throttle rate if set
+			if (this.settings.throttleDuration !== undefined) {
+				this.setThrottleDuration(this.settings.throttleDuration);
+			}
+			
 			// Set up the values which won't change
 			this.$el = $(this.element);
 			this.$image = this.$el.find('img').first();
@@ -84,7 +89,7 @@
 				$.each(fp['focus' + axis], function( index, value ) {
 					fp['focus' + axis][index] = parseFloat(value.trim());
 					// Account for classic grid
-					if (fp.settings.gridOrigin === 'center') {
+					if (fp.settings.legacyGrid === true) {
 						if (axis === 'X') {
 							fp['focus' + axis][index] = (fp['focus' + axis][index] + 1)*0.5;
 						}
