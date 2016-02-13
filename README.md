@@ -2,7 +2,7 @@
 
 ## Art direction for flexible image containers
 
-![image](demos/img/demo.jpg)
+![Cropping comparison](demos/img/demo.jpg)
 
 Websites don't have a single layout any more. The space you have for an image may be portrait on a laptop, landscape on a tablet, and square on a mobile - particularly if you're using a full-screen image.
 
@@ -16,12 +16,18 @@ For a quick overview of the plugin check out this [video by Petr Tichy](http://y
 
 Here are some examples showing the same image cropped a variety of different ways at once. Make sure you play with resizing the browser window to get a feel for what FocusPoint does.
 
-* 	[Lizard](http://jonom.github.io/jquery-focuspoint/demos/grid/lizard.html)
-* 	[Kangaroo](http://jonom.github.io/jquery-focuspoint/demos/grid/kangaroo.html)
-* 	[Dolphin](http://jonom.github.io/jquery-focuspoint/demos/grid/dolphin.html)
-* 	[Bird](http://jonom.github.io/jquery-focuspoint/demos/grid/bird.html)
+* [Lizard](http://jonom.github.io/jquery-focuspoint/demos/grid/lizard.html)
+* [Kangaroo](http://jonom.github.io/jquery-focuspoint/demos/grid/kangaroo.html)
+* [Dolphin](http://jonom.github.io/jquery-focuspoint/demos/grid/dolphin.html)
+* [Bird](http://jonom.github.io/jquery-focuspoint/demos/grid/bird.html)
 
 And here is a [full screen](http://jonom.github.io/jquery-focuspoint/demos/full-screen/index.html) demo.
+
+## In the wild
+
+FocusPoint helps with art direction on [Adele's website](http://adele.com/home/).
+
+Are you using FocusPoint on a cool or high profile website? [Let me know!](http://jonathonmenz.com)
 
 ## How does it work?
 
@@ -35,7 +41,9 @@ FocusPoint requires you to indicate where this focal point is located within you
 
 An image's focus point is made up of `x` (horizontal) and `y` (vertical) coordinates. The value of a coordinate can be a decimal point number anywhere between `0` and `1` and works similar to positioning in CSS. On the `x` axis `0` means the left edge and `1` means the right, while on the `y` axis `0` means the top and `1` means the bottom. On both axes `0.5` indicates the center.
 
-![image](demos/img/grid.png)
+![Grid diagram](demos/img/grid.png)
+
+*Note: Version 1 of this plugin used a different grid and coordinate system. If you like you can keep using the old system by using the `legacyGrid` setting (see below).*
 
 **Sound hard?** Don't worry, you can easily find the focus point coordinates of any image by using the [helper tool](http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) *(courtesy of [@auginator](https://github.com/auginator)).*
 
@@ -114,6 +122,8 @@ Or the shorter way, like this: `$(someContainer).focusPoint('methodName')`
 Suppose you have an image that looks okay in a square or portrait frame, but it really doesn't work in a landscape container, due to lack of vertical negative space in the image. In that case you might want the image to fill the frame for square or portrait aspect ratios, but only partially fill the frame in landscape ones. You can do this by specifying a minimum cropping region. All you need to do is pass two comma separated `x` coordinates and/or two `y` coordinates instead of one.
 
 ![diagram of cropping region](demos/img/minimum-region.png)
+
+[See an example](http://jonom.github.io/jquery-focuspoint/demos/test/index.html)
 
 #### Using FocusPoint in content sliders
 

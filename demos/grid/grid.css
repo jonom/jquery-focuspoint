@@ -22,7 +22,9 @@ body {
 	position: absolute;
 	overflow: hidden;
 	border: 5px solid #fff;
-	margin: -5px 0 0 -5px;
+	background: #ccc;
+	box-shadow: inset 0px 0px 65px rgba(0, 0, 0, 0.4);
+	box-sizing: border-box;
 }
 #Frame1, #Frame4, #Frame7 {
 	width: 66.6666667%;
