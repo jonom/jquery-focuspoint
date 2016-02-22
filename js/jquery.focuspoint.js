@@ -181,38 +181,7 @@
 			var axisClip = false; // Clipping axis
 
 			// Scale and position image
-			if (this.imageRatio > data.containerRatio) {
-				axisClip = data.clippingAxis = 'X';
-			}
-			else if (this.imageRatio < data.containerRatio) {
-				axisClip = data.clippingAxis = 'Y';
-			}
-			if (axisClip) {
-				if (this['maxScaleRatio' + axisClip] && data.axisScale[axisClip] > this['maxScaleRatio' + axisClip]) {
-					// Need to scale down image to fit min cropping region in frame
-					data.scale = this['maxScaleRatio' + axisClip] / data.axisScale[axisClip];
-					data.shiftSecondary = ((1 - data.scale) * 50) + '%';
-					data.shiftPrimary = (this['focus' + axisClip + 'MinStart'] * -100 * data.axisScale[axisClip] * data.scale) + '%';
-				}
-				else {
-					// Move image so focus point is in center of frame
-					data.shiftPrimary = 0.5 - (this['focus' + axisClip] * data.axisScale[axisClip]);
-					// Make sure image fills frame
-					data.spareNeg = (data.axisScale[axisClip] - 1) * -1;
-					if (data.shiftPrimary > 0) {
-						data.shiftPrimary = 0;
-					}
-					else if (data.shiftPrimary < 0 && data.shiftPrimary < data.spareNeg) {
-						data.shiftPrimary = data.spareNeg;
-					}
-					data.shiftPrimary = (data.shiftPrimary * 100)  + '%';
-				}
-				this.$image.css((axisClip === 'X') ? 'width' : 'height', (data.axisScale[axisClip] * data.scale * 100) + '%');
-				this.$image.css((axisClip === 'X') ? 'height' : 'width', (data.scale * 100) + '%');
-				this.$image.css((axisClip === 'X') ? 'left' : 'top', data.shiftPrimary);
-				this.$image.css((axisClip === 'X') ? 'top' : 'left', data.shiftSecondary);
-			}
-			else {
+			if (this.imageRatio = data.containerRatio) { // Leave func ASAP if possible
 				// No clipping
 				this.$image.css({
 					'width': '100%',
@@ -220,7 +189,38 @@
 					'left': 0,
 					'top': 0
 				});
+				return;
 			}
+			else if (this.imageRatio > data.containerRatio) {
+				axisClip = data.clippingAxis = 'X';
+			}
+			else { //if (this.imageRatio < data.containerRatio)
+				axisClip = data.clippingAxis = 'Y';
+			}
+
+			if (this['maxScaleRatio' + axisClip] && data.axisScale[axisClip] > this['maxScaleRatio' + axisClip]) {
+				// Need to scale down image to fit min cropping region in frame
+				data.scale = this['maxScaleRatio' + axisClip] / data.axisScale[axisClip];
+				data.shiftSecondary = ((1 - data.scale) * 50) + '%';
+				data.shiftPrimary = (this['focus' + axisClip + 'MinStart'] * -100 * data.axisScale[axisClip] * data.scale) + '%';
+			}
+			else {
+				// Move image so focus point is in center of frame
+				data.shiftPrimary = 0.5 - (this['focus' + axisClip] * data.axisScale[axisClip]);
+				// Make sure image fills frame
+				data.spareNeg = (data.axisScale[axisClip] - 1) * -1;
+				if (data.shiftPrimary > 0) {
+					data.shiftPrimary = 0;
+				}
+				else if (data.shiftPrimary < 0 && data.shiftPrimary < data.spareNeg) {
+					data.shiftPrimary = data.spareNeg;
+				}
+				data.shiftPrimary = (data.shiftPrimary * 100)  + '%';
+			}
+			this.$image.css((axisClip === 'X') ? 'width' : 'height', (data.axisScale[axisClip] * data.scale * 100) + '%');
+			this.$image.css((axisClip === 'X') ? 'height' : 'width', (data.scale * 100) + '%');
+			this.$image.css((axisClip === 'X') ? 'left' : 'top', data.shiftPrimary);
+			this.$image.css((axisClip === 'X') ? 'top' : 'left', data.shiftSecondary);
 		}
 	});
 
