@@ -6,7 +6,7 @@
  * @preserve
  */
 ;(function ( $, window, document, undefined ) {
-	
+
 	var defaults = {
 		reCalcOnWindowResize: true,
 		setTransformOrigin: true,
@@ -30,7 +30,7 @@
 			}, ms);
 		};
 	};
-	
+
 	// Single resize listener for all focus point instances
 	var updateResizeListener = function() {
 		$(window).off('resize.focuspoint');
@@ -47,7 +47,7 @@
 			}
 		}
 	};
-	
+
 	// For sorting
 	var compareNumbers = function(a, b) {
 		return a - b;
@@ -67,19 +67,19 @@
 			if (this.settings.throttleDuration !== undefined) {
 				this.setThrottleDuration(this.settings.throttleDuration);
 			}
-			
+
 			// Set up the values which won't change
 			this.$el = $(this.element);
 			this.$image = this.$el.find('img').first();
 			this.imageW = this.$el.data('imageW');
 			this.imageH = this.$el.data('imageH');
 			this.imageRatio = this.imageW / this.imageH;
-			
+
 			// Determine image dimensions if missing
 			if (!this.imageW && !this.imageH) {
 				return this.resolveImageSize();
 			}
-			
+
 			// Separate and sanitise focus points.
 			// There may be one or two focus coordinates per axis, defining a single point or area
 			var fp = this;
@@ -92,7 +92,7 @@
 					if (fp.settings.legacyGrid === true) {
 						if (axis === 'X') {
 							fp['focus' + axis][index] = (fp['focus' + axis][index] + 1)*0.5;
-						} 
+						}
 						else {
 							fp['focus' + axis][index] = (fp['focus' + axis][index] - 1)*-0.5;
 						}
@@ -104,14 +104,14 @@
 					fp['focus' + axis + 'MinStart'] = fp['focus' + axis][0];
 					fp['focus' + axis + 'MinStop'] = fp['focus' + axis][1];
 					fp['focus' + axis] = (fp['focus' + axis][0] + fp['focus' + axis][1]) / 2;
-				} 
+				}
 				else {
 					fp['focus' + axis + 'MinStart'] = fp['focus' + axis + 'MinStop'] = fp['focus' + axis] = fp['focus' + axis][0];
 				}
 				// Min cropping region ratios
 				fp['maxScaleRatio' + axis] = 1 / (fp['focus' + axis + 'MinStop'] - fp['focus' + axis + 'MinStart']);
 			});
-			
+
 			// Set transform origin
 			if (this.settings.setTransformOrigin) {
 				var transformOrigin = (fp.focusX * 100) + '% ' + (fp.focusY * 100) + '%';
@@ -164,7 +164,6 @@
 		adjustFocus: function() {
 			// Store all the cropping data in one var for easy debugging
 			var data = {};
-			var a = false; // Clipping axis
 			data.containerW = this.$el.width();
 			data.containerH = this.$el.height();
 			if (!(data.containerW > 0 && data.containerH > 0 && this.imageW > 0 && this.imageH > 0)) {
@@ -179,26 +178,27 @@
 				X: this.imageRatio / data.containerRatio,
 				Y: data.containerRatio / this.imageRatio
 			};
-			
+			var axisClip = false; // Clipping axis
+
 			// Scale and position image
 			if (this.imageRatio > data.containerRatio) {
-				a = data.clippingAxis = 'X';
+				axisClip = data.clippingAxis = 'X';
 			}
 			else if (this.imageRatio < data.containerRatio) {
-				a = data.clippingAxis = 'Y';
+				axisClip = data.clippingAxis = 'Y';
 			}
-			if (a) {
-				if (this['maxScaleRatio' + a] && data.axisScale[a] > this['maxScaleRatio' + a]) {
+			if (axisClip) {
+				if (this['maxScaleRatio' + axisClip] && data.axisScale[axisClip] > this['maxScaleRatio' + axisClip]) {
 					// Need to scale down image to fit min cropping region in frame
-					data.scale = this['maxScaleRatio' + a] / data.axisScale[a];
+					data.scale = this['maxScaleRatio' + axisClip] / data.axisScale[axisClip];
 					data.shiftSecondary = ((1 - data.scale) * 50) + '%';
-					data.shiftPrimary = (this['focus' + a + 'MinStart'] * -100 * data.axisScale[a] * data.scale) + '%';
+					data.shiftPrimary = (this['focus' + axisClip + 'MinStart'] * -100 * data.axisScale[axisClip] * data.scale) + '%';
 				}
 				else {
 					// Move image so focus point is in center of frame
-					data.shiftPrimary = 0.5 - (this['focus' + a] * data.axisScale[a]);
+					data.shiftPrimary = 0.5 - (this['focus' + axisClip] * data.axisScale[axisClip]);
 					// Make sure image fills frame
-					data.spareNeg = (data.axisScale[a] - 1) * -1;
+					data.spareNeg = (data.axisScale[axisClip] - 1) * -1;
 					if (data.shiftPrimary > 0) {
 						data.shiftPrimary = 0;
 					}
@@ -207,10 +207,10 @@
 					}
 					data.shiftPrimary = (data.shiftPrimary * 100)  + '%';
 				}
-				this.$image.css((a === 'X') ? 'width' : 'height', (data.axisScale[a] * data.scale * 100) + '%');
-				this.$image.css((a === 'X') ? 'height' : 'width', (data.scale * 100) + '%');
-				this.$image.css((a === 'X') ? 'left' : 'top', data.shiftPrimary);
-				this.$image.css((a === 'X') ? 'top' : 'left', data.shiftSecondary);
+				this.$image.css((axisClip === 'X') ? 'width' : 'height', (data.axisScale[axisClip] * data.scale * 100) + '%');
+				this.$image.css((axisClip === 'X') ? 'height' : 'width', (data.scale * 100) + '%');
+				this.$image.css((axisClip === 'X') ? 'left' : 'top', data.shiftPrimary);
+				this.$image.css((axisClip === 'X') ? 'top' : 'left', data.shiftSecondary);
 			}
 			else {
 				// No clipping
