@@ -216,11 +216,13 @@
 				}
 				dataShiftPrimary = (dataShiftPrimary * 100)  + '%';
 			}
+
+			var isClippingAxisX = (dataClippingAxis === 'X') ? true : false;
 			this.$image
-				.css((dataClippingAxis === 'X') ? 'width' : 'height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
-				.css((dataClippingAxis === 'X') ? 'height' : 'width', (dataScale * 100) + '%')
-				.css((dataClippingAxis === 'X') ? 'left' : 'top', dataShiftPrimary)
-				.css((dataClippingAxis === 'X') ? 'top' : 'left', dataShiftSecondary);
+				.css((isClippingAxisX) ? 'width' : 'height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
+				.css((isClippingAxisX) ? 'height' : 'width', (dataScale * 100) + '%')
+				.css((isClippingAxisX) ? 'left' : 'top', dataShiftPrimary)
+				.css((isClippingAxisX) ? 'top' : 'left', dataShiftSecondary);
 		}
 	});
 
