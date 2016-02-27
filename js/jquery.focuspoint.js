@@ -225,18 +225,20 @@
 			// 	.css((isClippingAxisX) ? 'top' : 'left', dataShiftSecondary);
 
 			if (dataClippingAxis === 'X') {
-				this.$image
-					.css('width', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
-					.css('height', (dataScale * 100) + '%')
-					.css('left', dataShiftPrimary)
-					.css('top', dataShiftSecondary);
+				this.$image.css({
+					'width': ((dataAxisScale[dataClippingAxis] * dataScale * 100) + '%'),
+					'height': ((dataScale * 100) + '%'),
+					'left': (dataShiftPrimary),
+					'top': (dataShiftSecondary)
+				})
 			}
 			else {
-				this.$image
-					.css('width', (dataScale * 100) + '%')
-					.css('height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
-					.css('left', dataShiftSecondary)
-					.css('top', dataShiftPrimary)
+				this.$image.css({
+					'width': ((dataScale * 100) + '%'),
+					'height': ((dataAxisScale[dataClippingAxis] * dataScale * 100) + '%'),
+					'left': (dataShiftSecondary),
+					'top': (dataShiftPrimary)
+				})
 			}
 
 		}
