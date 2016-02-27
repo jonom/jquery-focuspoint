@@ -163,25 +163,25 @@
 		// Optimally position image in container
 		adjustFocus: function() {
 			// Store all the cropping data in one var for easy debugging
-			//var data = {};
-			var dataContainerW = this.$el.width();
-			var dataContainerH = this.$el.height();
-			if (!(dataContainerW > 0 && dataContainerH > 0 && this.imageW > 0 && this.imageH > 0)) {
+			var data = {};
+			data.containerW = this.$el.width();
+			data.containerH = this.$el.height();
+			if (!(data.containerW > 0 && data.containerH > 0 && this.imageW > 0 && this.imageH > 0)) {
 				return false; //Need dimensions to proceed
 			}
 
-			var dataContainerRatio = dataContainerW / dataContainerH;
-			var dataAxisScale = {
-				X: this.imageRatio / dataContainerRatio,
-				Y: dataContainerRatio / this.imageRatio
+			data.containerRatio = data.containerW / data.containerH;
+			data.axisScale = {
+				X: this.imageRatio / data.containerRatio,
+				Y: data.containerRatio / this.imageRatio
 			};
-			var dataClippingAxis = false;
+			data.clippingAxis = false;
 			// Scale and position image
-			if (this.imageRatio > dataContainerRatio) {
-				dataClippingAxis = 'X';
+			if (this.imageRatio > data.containerRatio) {
+				data.clippingAxis = 'X';
 			}
-			else if (this.imageRatio < dataContainerRatio) {
-				dataClippingAxis = 'Y';
+			else if (this.imageRatio < data.containerRatio) {
+				data.clippingAxis = 'Y';
 			}
 			else {
 				// No clipping
@@ -194,44 +194,44 @@
 				return; // no more processing needed
 			}
 
-			var dataScale = 1;
-			var dataShiftPrimary = 0;
-			var dataShiftSecondary = 0;
-			if (this['maxScaleRatio' + dataClippingAxis] && dataAxisScale[dataClippingAxis] > this['maxScaleRatio' + dataClippingAxis]) {
+			data.scale = 1;
+			data.shiftPrimary = 0;
+			data.shiftSecondary = 0;
+			if (this['maxScaleRatio' + data.clippingAxis] && data.axisScale[data.clippingAxis] > this['maxScaleRatio' + data.clippingAxis]) {
 				// Need to scale down image to fit min cropping region in frame
-				dataScale = this['maxScaleRatio' + dataClippingAxis] / dataAxisScale[dataClippingAxis];
-				dataShiftSecondary = ((1 - dataScale) * 50) + '%';
-				dataShiftPrimary = (this['focus' + dataClippingAxis + 'MinStart'] * -100 * dataAxisScale[dataClippingAxis] * dataScale) + '%';
+				data.scale = this['maxScaleRatio' + data.clippingAxis] / data.axisScale[data.clippingAxis];
+				data.shiftSecondary = ((1 - data.scale) * 50) + '%';
+				data.shiftPrimary = (this['focus' + data.clippingAxis + 'MinStart'] * -100 * data.axisScale[data.clippingAxis] * data.scale) + '%';
 			}
 			else {
 				// Move image so focus point is in center of frame
-				dataShiftPrimary = 0.5 - (this['focus' + dataClippingAxis] * dataAxisScale[dataClippingAxis]);
+				data.shiftPrimary = 0.5 - (this['focus' + data.clippingAxis] * data.axisScale[data.clippingAxis]);
 				// Make sure image fills frame
-				dataSpareNeg = (dataAxisScale[dataClippingAxis] - 1) * -1;
-				if (dataShiftPrimary > 0) {
-					dataShiftPrimary = 0;
+				data.spareNeg = (data.axisScale[data.clippingAxis] - 1) * -1;
+				if (data.shiftPrimary > 0) {
+					data.shiftPrimary = 0;
 				}
-				else if (dataShiftPrimary < 0 && dataShiftPrimary < dataSpareNeg) {
-					dataShiftPrimary = dataSpareNeg;
+				else if (data.shiftPrimary < 0 && data.shiftPrimary < data.spareNeg) {
+					data.shiftPrimary = data.spareNeg;
 				}
-				dataShiftPrimary = (dataShiftPrimary * 100)  + '%';
+				data.shiftPrimary = (data.shiftPrimary * 100)  + '%';
 			}
 
 			// Assign CSS values to image container
-			if (dataClippingAxis === 'X') {
+			if (data.clippingAxis === 'X') {
 				this.$image.css({
-					'width': ((dataAxisScale[dataClippingAxis] * dataScale * 100) + '%'),
-					'height': ((dataScale * 100) + '%'),
-					'left': (dataShiftPrimary),
-					'top': (dataShiftSecondary)
+					'width': ((data.axisScale[data.clippingAxis] * data.scale * 100) + '%'),
+					'height': ((data.scale * 100) + '%'),
+					'left': (data.shiftPrimary),
+					'top': (data.shiftSecondary)
 				})
 			}
-			else {
+			else { //clippingAxis === 'Y'
 				this.$image.css({
-					'width': ((dataScale * 100) + '%'),
-					'height': ((dataAxisScale[dataClippingAxis] * dataScale * 100) + '%'),
-					'left': (dataShiftSecondary),
-					'top': (dataShiftPrimary)
+					'width': ((data.scale * 100) + '%'),
+					'height': ((data.axisScale[data.clippingAxis] * data.scale * 100) + '%'),
+					'left': (data.shiftSecondary),
+					'top': (data.shiftPrimary)
 				})
 			}
 
