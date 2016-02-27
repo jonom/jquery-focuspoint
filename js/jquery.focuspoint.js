@@ -217,13 +217,7 @@
 				dataShiftPrimary = (dataShiftPrimary * 100)  + '%';
 			}
 
-			// var isClippingAxisX = (dataClippingAxis === 'X') ? true : false;
-			// this.$image
-			// 	.css((isClippingAxisX) ? 'width' : 'height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
-			// 	.css((isClippingAxisX) ? 'height' : 'width', (dataScale * 100) + '%')
-			// 	.css((isClippingAxisX) ? 'left' : 'top', dataShiftPrimary)
-			// 	.css((isClippingAxisX) ? 'top' : 'left', dataShiftSecondary);
-
+			// Assign CSS values to image container
 			if (dataClippingAxis === 'X') {
 				this.$image.css({
 					'width': ((dataAxisScale[dataClippingAxis] * dataScale * 100) + '%'),
