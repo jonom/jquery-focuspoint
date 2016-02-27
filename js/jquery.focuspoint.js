@@ -164,18 +164,18 @@
 		adjustFocus: function() {
 			// Store all the cropping data in one var for easy debugging
 			//var data = {};
-			dataContainerW = this.$el.width();
-			dataContainerH = this.$el.height();
+			var dataContainerW = this.$el.width();
+			var dataContainerH = this.$el.height();
 			if (!(dataContainerW > 0 && dataContainerH > 0 && this.imageW > 0 && this.imageH > 0)) {
 				return false; //Need dimensions to proceed
 			}
 
-			dataContainerRatio = dataContainerW / dataContainerH;
-			dataAxisScale = {
+			var dataContainerRatio = dataContainerW / dataContainerH;
+			var dataAxisScale = {
 				X: this.imageRatio / dataContainerRatio,
 				Y: dataContainerRatio / this.imageRatio
 			};
-			dataClippingAxis = false;
+			var dataClippingAxis = false;
 			// Scale and position image
 			if (this.imageRatio > dataContainerRatio) {
 				dataClippingAxis = 'X';
@@ -194,9 +194,9 @@
 				return; // no more processing needed
 			}
 
-			dataScale = 1;
-			dataShiftPrimary = 0;
-			dataShiftSecondary = 0;
+			var dataScale = 1;
+			var dataShiftPrimary = 0;
+			var dataShiftSecondary = 0;
 			if (this['maxScaleRatio' + dataClippingAxis] && dataAxisScale[dataClippingAxis] > this['maxScaleRatio' + dataClippingAxis]) {
 				// Need to scale down image to fit min cropping region in frame
 				dataScale = this['maxScaleRatio' + dataClippingAxis] / dataAxisScale[dataClippingAxis];
@@ -216,11 +216,11 @@
 				}
 				dataShiftPrimary = (dataShiftPrimary * 100)  + '%';
 			}
-			this.$image.css((dataClippingAxis === 'X') ? 'width' : 'height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%');
-			this.$image.css((dataClippingAxis === 'X') ? 'height' : 'width', (dataScale * 100) + '%');
-			this.$image.css((dataClippingAxis === 'X') ? 'left' : 'top', dataShiftPrimary);
-			this.$image.css((dataClippingAxis === 'X') ? 'top' : 'left', dataShiftSecondary);
-
+			this.$image
+				.css((dataClippingAxis === 'X') ? 'width' : 'height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
+				.css((dataClippingAxis === 'X') ? 'height' : 'width', (dataScale * 100) + '%')
+				.css((dataClippingAxis === 'X') ? 'left' : 'top', dataShiftPrimary)
+				.css((dataClippingAxis === 'X') ? 'top' : 'left', dataShiftSecondary);
 		}
 	});
 
