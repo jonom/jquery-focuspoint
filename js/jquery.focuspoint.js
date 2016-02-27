@@ -217,12 +217,28 @@
 				dataShiftPrimary = (dataShiftPrimary * 100)  + '%';
 			}
 
-			var isClippingAxisX = (dataClippingAxis === 'X') ? true : false;
-			this.$image
-				.css((isClippingAxisX) ? 'width' : 'height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
-				.css((isClippingAxisX) ? 'height' : 'width', (dataScale * 100) + '%')
-				.css((isClippingAxisX) ? 'left' : 'top', dataShiftPrimary)
-				.css((isClippingAxisX) ? 'top' : 'left', dataShiftSecondary);
+			// var isClippingAxisX = (dataClippingAxis === 'X') ? true : false;
+			// this.$image
+			// 	.css((isClippingAxisX) ? 'width' : 'height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
+			// 	.css((isClippingAxisX) ? 'height' : 'width', (dataScale * 100) + '%')
+			// 	.css((isClippingAxisX) ? 'left' : 'top', dataShiftPrimary)
+			// 	.css((isClippingAxisX) ? 'top' : 'left', dataShiftSecondary);
+
+			if (dataClippingAxis === 'X') {
+				this.$image
+					.css('width', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
+					.css('height', (dataScale * 100) + '%')
+					.css('left', dataShiftPrimary)
+					.css('top', dataShiftSecondary);
+			}
+			else {
+				this.$image
+					.css('width', (dataScale * 100) + '%')
+					.css('height', (dataAxisScale[dataClippingAxis] * dataScale * 100) + '%')
+					.css('left', dataShiftSecondary)
+					.css('top', dataShiftPrimary)
+			}
+
 		}
 	});
 
