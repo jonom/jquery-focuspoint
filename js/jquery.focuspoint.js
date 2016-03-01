@@ -1,8 +1,8 @@
 /**
- * jQuery FocusPoint; version: dev
+ * jQuery FocusPoint; version: v2-dev
  * Author: J. Menz http://jonathonmenz.com
  * Source: https://github.com/jonom/jquery-focuspoint
- * Copyright (c) 2014 - 2016 J. Menz; MIT License
+ * Copyright (c) 2014 - 2016 J. Menz; License TBC
  * @preserve
  */
 ;(function ( $, window, document, undefined ) {
@@ -224,7 +224,7 @@
 					'height': ((data.scale * 100) + '%'),
 					'left': (data.shiftPrimary),
 					'top': (data.shiftSecondary)
-				})
+				});
 			}
 			else { //clippingAxis === 'Y'
 				this.$image.css({
@@ -232,7 +232,7 @@
 					'height': ((data.axisScale[data.clippingAxis] * data.scale * 100) + '%'),
 					'left': (data.shiftSecondary),
 					'top': (data.shiftPrimary)
-				})
+				});
 			}
 
 		}

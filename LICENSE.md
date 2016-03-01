@@ -1,3 +1,7 @@
+jQuery v1 is released under the MIT license described below. jQuery v2 is
+under development and may be released under a different licensing model,
+including a commercial option.
+
 Copyright 2014 Jonathon Menz and other contributors,
 https://github.com/jonom/jquery-focuspoint
 

@@ -1,5 +1,7 @@
 # jQuery FocusPoint 2
 
+**Note:** This branch is currently under development and and is not intended for production use. The licensing model may change for version 2 and a commercial license may be required for use in commercial projects. This is intended to ensure I can continue to support this project in a sustainable fashion and is likely to be inexpensive. Contributions are welcome as long as you are comfortable with this potential change.
+
 ## Art direction for flexible image containers
 
 ![Cropping comparison](demos/img/demo.jpg)
