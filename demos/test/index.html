@@ -21,7 +21,7 @@
 				$(document).ready(function() {
 					
 					//Activate test cases individually
-					$('#Default .focuspoint, #MissingWH .focuspoint, #Zoom .focuspoint, #MinRegion .focuspoint').focusPoint();
+					$('#Default .focuspoint, #MissingWH .focuspoint, #Zoom .focuspoint, #MinRegion .focuspoint, #Video .focuspoint').focusPoint();
 					$('#LegacyGrid .focuspoint').focusPoint({legacyGrid: true});
 					$('#Zoom a').click(function(e){
 						e.preventDefault();
@@ -184,6 +184,19 @@
 					<a href="#" class="throttle-slow">» Throttle slow</a>
 					<a href="#" class="throttle-off">» Throttle off</a>
 				</span>
+			</div>
+	
+			<div id="Video" class="test">
+				<div class="focuspoint"
+				data-focus-x=".3625"
+				data-focus-y=".25"
+				data-image-w="400"
+				data-image-h="224">
+	        <video autoplay loop>
+	            <source src="../img/cloudy-water.mp4" type="video/mp4" />
+	        </video>
+				</div>
+				<span class="label">Video</span>
 			</div>
 	
 	</body>

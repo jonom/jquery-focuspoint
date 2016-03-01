@@ -4,7 +4,8 @@
 	position: relative; /*Any position but static should work*/
 	overflow: hidden;
 }
-.focuspoint img {
+.focuspoint img,
+.focuspoint video {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -15,7 +16,8 @@
 	min-width: 100%; min-height: 100%;
 	max-height: none; max-width: none;
 }
-.focuspoint-active img {
+.focuspoint-active img,
+.focuspoint-active video {
 	min-width: 0;
 	min-height: 0;
 }

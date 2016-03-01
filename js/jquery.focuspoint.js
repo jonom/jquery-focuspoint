@@ -70,7 +70,7 @@
 
 			// Set up the values which won't change
 			this.$el = $(this.element);
-			this.$image = this.$el.find('img').first();
+			this.$image = this.$el.find('img, video').first();
 			this.imageW = this.$el.data('imageW');
 			this.imageH = this.$el.data('imageH');
 			this.imageRatio = this.imageW / this.imageH;
