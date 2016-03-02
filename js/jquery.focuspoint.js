@@ -13,32 +13,25 @@
 		legacyGrid: false
 	};
 	var $resizeElements = $(); // Which focuspoint containers are listening to resize event
-	var throttleDuration = 17; // Same throttle duration for all containers (ms - set to 0 to disable throttling)
-
-	// Create a throttled version of a function
-	var throttle = function(fn, ms) {
-		var isRunning = false;
-		return function() {
-			var args = Array.prototype.slice.call(arguments, 0);
-			if (isRunning) {
-				return false;
-			}
-			isRunning = true;
-			setTimeout(function() {
-				isRunning = false;
-				fn.apply(null, args);
-			}, ms);
-		};
-	};
+	var resizeFrameRate = 15; // Throttle the frame rate - set to 0 to disable throttling) 15fps default
+	
+	// Resize throttling https://developer.mozilla.org/en-US/docs/Web/Events/resize
+	var resizeTimeout;
+	function resizeThrottler() {
+		if ( !resizeTimeout ) {
+			resizeTimeout = setTimeout(function() {
+				resizeTimeout = null;
+				$resizeElements.focusPoint('adjustFocus');
+			}, 1000/resizeFrameRate);
+		}
+	}
 
 	// Single resize listener for all focus point instances
 	var updateResizeListener = function() {
 		$(window).off('resize.focuspoint');
 		if ($resizeElements.length) {
-			if (throttleDuration > 0) {
-				$(window).on('resize.focuspoint', throttle(function(){
-					$resizeElements.focusPoint('adjustFocus');
-				}, throttleDuration));
+			if (resizeFrameRate > 0) {
+				$(window).on('resize.focuspoint', resizeThrottler);
 			}
 			else {
 				$(window).on('resize.focuspoint', function(){
@@ -64,8 +57,8 @@
 	$.extend(FocusPoint.prototype, {
 		init: function () {
 			// Pass through throttle rate if set
-			if (this.settings.throttleDuration !== undefined) {
-				this.setThrottleDuration(this.settings.throttleDuration);
+			if (this.settings.resizeFrameRate !== undefined) {
+				this.setResizeFrameRate(this.settings.resizeFrameRate);
 			}
 
 			// Set up the values which won't change
@@ -156,8 +149,8 @@
 			updateResizeListener();
 		},
 		// Change the throttling duration (affects all instances)
-		setThrottleDuration: function(ms) {
-			throttleDuration = ms;
+		setResizeFrameRate: function(fps) {
+			resizeFrameRate = fps;
 			updateResizeListener();
 		},
 		// Optimally position image in container
