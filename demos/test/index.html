@@ -47,18 +47,6 @@
 						$('#NoResize .focuspoint').focusPoint('windowOff');
 						return false;
 					});
-					$('#NoResize a.throttle-slow').click(function(){
-						$('#NoResize .focuspoint').data('focusPoint').setResizeFrameRate(1);
-						return false;
-					});
-					$('#NoResize a.throttle-fast').click(function(){
-						$('#NoResize .focuspoint').data('focusPoint').setResizeFrameRate(20);
-						return false;
-					});
-					$('#NoResize a.throttle-off').click(function(){
-						$('#NoResize .focuspoint').data('focusPoint').setResizeFrameRate(0);
-						return false;
-					});
 					
 				});
 			}(jQuery));
@@ -180,9 +168,6 @@
 					<a href="#" class="adjust">» Adjust Focus</a>
 					<a href="#" class="resize-on">» Resize listening On</a>
 					<a href="#" class="resize-off">» Resize listening Off</a>
-					<a href="#" class="throttle-fast">» Throttle fast</a>
-					<a href="#" class="throttle-slow">» Throttle slow</a>
-					<a href="#" class="throttle-off">» Throttle off</a>
 				</span>
 			</div>
 	
