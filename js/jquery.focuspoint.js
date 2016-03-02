@@ -16,14 +16,21 @@
 	var resizeFrameRate = 15; // Throttle the frame rate - set to 0 to disable throttling) 15fps default
 	
 	// Resize throttling https://developer.mozilla.org/en-US/docs/Web/Events/resize
-	var resizeTimeout;
-	function resizeThrottler() {
-		if ( !resizeTimeout ) {
-			resizeTimeout = setTimeout(function() {
-				resizeTimeout = null;
-				$resizeElements.focusPoint('adjustFocus');
-			}, 1000/resizeFrameRate);
+	var running = false;
+	function resize() {
+		if (!running) {
+			running = true;
+			
+			if (window.requestAnimationFrame) {
+				window.requestAnimationFrame(doResize);
+			} else {
+				setTimeout(doResize, 1000/resizeFrameRate);
+			}
 		}
+	}
+	function doResize() {
+		$resizeElements.focusPoint('adjustFocus');
+		running = false;
 	}
 
 	// Single resize listener for all focus point instances
@@ -31,7 +38,7 @@
 		$(window).off('resize.focuspoint');
 		if ($resizeElements.length) {
 			if (resizeFrameRate > 0) {
-				$(window).on('resize.focuspoint', resizeThrottler);
+				$(window).on('resize.focuspoint', resize);
 			}
 			else {
 				$(window).on('resize.focuspoint', function(){
