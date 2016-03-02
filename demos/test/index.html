@@ -48,15 +48,15 @@
 						return false;
 					});
 					$('#NoResize a.throttle-slow').click(function(){
-						$('#NoResize .focuspoint').data('focusPoint').setThrottleDuration(500);
+						$('#NoResize .focuspoint').data('focusPoint').setResizeFrameRate(1);
 						return false;
 					});
 					$('#NoResize a.throttle-fast').click(function(){
-						$('#NoResize .focuspoint').data('focusPoint').setThrottleDuration(20);
+						$('#NoResize .focuspoint').data('focusPoint').setResizeFrameRate(20);
 						return false;
 					});
 					$('#NoResize a.throttle-off').click(function(){
-						$('#NoResize .focuspoint').data('focusPoint').setThrottleDuration(0);
+						$('#NoResize .focuspoint').data('focusPoint').setResizeFrameRate(0);
 						return false;
 					});
 					

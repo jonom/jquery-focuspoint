@@ -93,7 +93,7 @@ FocusPoint comes with a few options you can change to suit your needs.
 | Option                 | Values                | Default | Description |
 | ---------------------- | --------------------- | ------- | ----------- |
 | `reCalcOnWindowResize` | `true` or `false`     | `true`  | Whether or not to re-adjust image when the window is resized. |
-| `throttleDuration`     | Int e.g. `0` or `100` | `17`    | Throttling rate in milliseconds. Set to `0` to disable throttling. This is a global setting. |
+| `resizeFrameRate`     | Int e.g. `0` or `10` | `15`    | Resize frame rate (fps). Set to `0` to disable throttling. This is a global setting. |
 | `setTransformOrigin`   | `true` or `false`     | `true`  | Whether or not to set the images transform origin to match the focus point. This allows for easy zooming from the focus point with css transforms. |
 | `legacyGrid`   | `true` or `false`     | `false`  | Set to true to use FocusPoint v1 style coordinates and grid system. |
 
@@ -101,7 +101,7 @@ Example usage:
 
 ```javascript
 $('.focuspoint').focusPoint({
-	throttleDuration: 100 //re-focus images at most once every 100ms.
+	resizeFrameRate: 5 // Limit frame rate to 5fps
 });
 ```
 
