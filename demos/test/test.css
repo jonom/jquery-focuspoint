@@ -16,10 +16,12 @@
 	width: 50%;
 	height: 200px;
 }
+/*
 img,
 video {
 	transition: transform .5s, width .5s, height .5s, left .5s, top .5s;
 }
+*/
 .test .label {
 	position: absolute;
 	left: 0;

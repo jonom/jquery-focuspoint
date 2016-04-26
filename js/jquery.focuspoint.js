@@ -13,31 +13,52 @@
 		legacyGrid: false
 	};
 	var $resizeElements = $(); // Which focuspoint containers are listening to resize event
-	var resizeFrameRate = 15; // Throttle the frame rate - set to 0 to disable throttling) 15fps default
+
+	// https://davidwalsh.name/javascript-debounce-function
+	var debounce = function(func, wait, immediate) {
+		var timeout;
+		return function() {
+			var context = this, args = arguments;
+			var later = function() {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+			var callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
+		};
+	};
 	
-	// Resize throttling https://developer.mozilla.org/en-US/docs/Web/Events/resize
-	var resizeTimeout;
-	function resizeThrottler() {
-		if ( !resizeTimeout ) {
-			resizeTimeout = setTimeout(function() {
-				resizeTimeout = null;
-				$resizeElements.focusPoint('adjustFocus');
-			}, 1000/resizeFrameRate);
+	// Resize throttling. Let requestAnimationFrame set framerate rather than using resize event rate which may be too rapid or too slow.
+	var running = false;
+	// Called on resize event
+	var resize = function() {
+		if (!running) {
+			running = true;
+			doResize();
+			debounce(function() {
+				// Not resizing anymore so cancel animation
+				running = false;
+			}, 250);
 		}
-	}
+	};
+	var doResize = function() {
+		$resizeElements.focusPoint('adjustFocus');
+		if (running) {
+			if (window.requestAnimationFrame) {
+				window.requestAnimationFrame(doResize);
+			} else {
+				setTimeout(doResize, 1000/15); //15fps fallback
+			}
+		}
+	};
 
 	// Single resize listener for all focus point instances
 	var updateResizeListener = function() {
 		$(window).off('resize.focuspoint');
 		if ($resizeElements.length) {
-			if (resizeFrameRate > 0) {
-				$(window).on('resize.focuspoint', resizeThrottler);
-			}
-			else {
-				$(window).on('resize.focuspoint', function(){
-					$resizeElements.focusPoint('adjustFocus');
-				});
-			}
+			$(window).on('resize.focuspoint', resize);
 		}
 	};
 
@@ -56,11 +77,6 @@
 	// Avoid Plugin.prototype conflicts
 	$.extend(FocusPoint.prototype, {
 		init: function () {
-			// Pass through throttle rate if set
-			if (this.settings.resizeFrameRate !== undefined) {
-				this.setResizeFrameRate(this.settings.resizeFrameRate);
-			}
-
 			// Set up the values which won't change
 			this.$el = $(this.element);
 			this.$image = this.$el.find('img, video').first();
@@ -146,11 +162,6 @@
 		// Cancel automatic adjustments
 		windowOff: function() {
 			$resizeElements = $resizeElements.not(this.element);
-			updateResizeListener();
-		},
-		// Change the throttling duration (affects all instances)
-		setResizeFrameRate: function(fps) {
-			resizeFrameRate = fps;
 			updateResizeListener();
 		},
 		// Optimally position image in container
