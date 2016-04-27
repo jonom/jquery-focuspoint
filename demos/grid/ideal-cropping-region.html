@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>FocusPoint Example</title>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		
+		<link rel="stylesheet" type="text/css" href="../../css/focuspoint.css">
+		<link rel="stylesheet" type="text/css" href="../demo.css">
+		<link rel="stylesheet" type="text/css" href="grid.css">
+		
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.focuspoint.js"></script>
+		
+		<script type="text/javascript">
+		//<![CDATA[	
+			
+			(function($) {
+				$(document).ready(function() {
+					
+					//Activate focus points
+					$('.focuspoint').focusPoint();
+					
+				});
+			}(jQuery));
+		
+		//]]>
+		</script>
+		
+	</head>
+	<body>
+		
+		<div id="Frames">
+	
+			<div id="Frame1" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-focus-x-ideal="0.076, 0.942"
+				data-focus-y-ideal="0.458, 0.917"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+		
+			<div id="Frame2" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-focus-x-ideal="0.439, 0.912"
+				data-focus-y-ideal="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+		
+<!--
+			<div id="Frame3" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+		
+			<div id="Frame4" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+		
+			<div id="Frame5" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+		
+			<div id="Frame6" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+		
+			<div id="Frame7" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+		
+			<div id="Frame8" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+		
+			<div id="Frame9" class="focuspoint"
+				data-focus-x="0.439, 0.912"
+				data-focus-y="0.868, 0.475"
+				data-image-w="667"
+				data-image-h="1000">
+					<img src="../img/bird-min.jpg" alt="" />
+			</div>
+-->
+		
+		</div>
+		
+		<div id="Info">
+			<div id="Original">
+				<img src="../img/bird-min.jpg" alt="" />
+				<h4><span>Original</span></h4>
+			</div>
+			<p><b>Try resizing the window.</b> The image will fill each frame as much as it can, until that would prevent all of the minimum cropping region being shown. <a href="https://github.com/jonom/jquery-focuspoint">»&nbsp;Project&nbsp;Home</a></p>
+		</div>
+	
+	</body>
+</html>
