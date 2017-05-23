@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>jquery.focuspoint</id>
+    <title>jQuery FocusPoint</title>
+    <version>1.1.2</version>
+    <description>
+      Websites don't have a single layout any more. The space you have for an image may be portrait on a laptop, landscape on a tablet, and square on a mobile - particularly if you're using a full-screen image.
+
+      If you have to use the same image file in all these contexts, you might not be happy with the results you get when you 'fill' the allocated space with your image. Your subject might be clipped or completely missing, or just really awkward looking.
+
+      FocusPoint makes sure your image looks great in any container, by ensuring the 'spare' parts of your image (negative space) are cropped out before the important parts.
+    </description>
+    <summary>
+      FocusPoint makes sure your image looks great in any container, by ensuring the 'spare' parts of your image (negative space) are cropped out before the important parts.
+    </summary>
+    <projectUrl>https://github.com/jonom/jquery-focuspoint</projectUrl>
+    <authors>Jono Menz</authors>
+    <dependencies>
+      <dependency id="jQuery" version="1.9.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="css\focuspoint.css" target="content\Content" />
+    <file src="js\jquery.focuspoint.js" target="content\Scripts" />
+    <file src="js\jquery.focuspoint.min.js" target="content\Scripts" />
+    <file src="js\jquery.focuspoint.helpertool.js" target="content\Scripts" />
+    <file src="js\jquery.focuspoint.helper-basic.js" target="content\Scripts" />
+  </files>
+</package>
