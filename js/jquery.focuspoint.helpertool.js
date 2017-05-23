@@ -101,7 +101,7 @@
 		/*-----------------------------------------*/
 		
 		function printDataAttr(){
-			$dataAttrInput.val('data-focus-x="'+focusPointAttr.x.toFixed(2)+'" data-focus-y="'+focusPointAttr.y.toFixed(2)+'" data-focus-w="'+focusPointAttr.w+'" data-focus-h="'+focusPointAttr.h+'"');
+			$dataAttrInput.val('data-focus-x="'+focusPointAttr.x.toFixed(2)+'" data-focus-y="'+focusPointAttr.y.toFixed(2)+'" data-image-w="'+focusPointAttr.w+'" data-image-h="'+focusPointAttr.h+'"');
 		}
 
 		/*-----------------------------------------*/
