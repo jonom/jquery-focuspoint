@@ -11,17 +11,20 @@
     "url": "git+https://github.com/jonom/jquery-focuspoint.git"
   },
   "keywords": [
-    "\"crop\"",
-    "\"cropping\"",
-    "\"image\"",
-    "\"responsive\"",
-    "\"fill\"",
-    "\"background\"",
-    "\"full-screen\"",
-    "\"focus\"",
-    "\"focuspoint\""
+    "crop",
+    "cropping",
+    "image",
+    "responsive",
+    "fill",
+    "background",
+    "full-screen",
+    "focus",
+    "focuspoint"
   ],
-  "author": "\"Jonathon Menz (http://jonathonmenz.com)\"",
+  "author": {
+    "name":"Jonathon Menz",
+    "url":"http://jonathonmenz.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jonom/jquery-focuspoint/issues"
