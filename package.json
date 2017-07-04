@@ -21,7 +21,7 @@
     "\"focus\"",
     "\"focuspoint\""
   ],
-  "author": "\"Jonathon Menz <jonathonmenz.com> (http://jonathonmenz.com)\"",
+  "author": "\"Jonathon Menz (http://jonathonmenz.com)\"",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jonom/jquery-focuspoint/issues"
