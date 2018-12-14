@@ -1,10 +1,14 @@
 # jQuery FocusPoint
 
-## Support development of FocusPoint 2
+## FocusPoint 2
 
-Would you like to see a major update to this plugin, with better performance and advanced features? Work is underway, and you can help it go faster. Please make a small donation for each commercial project you use FocusPoint on, or [contact me](http://jonathonmenz.com) if you would like to sponsor development.
+I started work on a major update to this plugin a couple of years ago, but it has been in limbo for a while and probably won't be picked up again unless someone wants to sponsor the work (please [get in touch](http://jonathonmenz.com) if you do!). I didn't get as far as removing the jQuery dependancy but please feel free to use the v-2-dev branch to benefit from a few new features:
 
-**Chip in:** [$10](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FJGTMU8WEU3QQ) | [$25](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DTPS7VXKUNDBS) | [Other amount](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC)
+* Better resizing performance
+* More familiar coordinate system (like that used in CSS)
+* Suppor for ideal and minimum cropping region
+
+If you love this plugin feel free to send me an encouraging email or consider sponsoring an update. You're also welcome to make a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VUDD3ACRC4TC) if you like. I receive an average of one per year, so it won't go unnoticed. 😄💰
 
 ## Intelligent cropping for flexible image containers
 
