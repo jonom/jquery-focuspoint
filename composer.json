@@ -1,5 +1,5 @@
 {
-    "name": "skaught/jquery-focuspoint",
+    "name": "jonom/jquery-focuspoint",
     "description": "jQuery plugin for 'responsive cropping'. Dynamically crop images to fill available space without cutting out the image's subject. Great for full-screen images",
     "homepage": "http://jonom.github.io/jquery-focuspoint/",
     "license": "(MIT or GPL-1.0)",
