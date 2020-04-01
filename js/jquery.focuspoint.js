@@ -14,7 +14,7 @@
 	};
 
 	//Setup a container instance
-	var setupContainer = function($el) {
+	var setupContainer = function($el, opt_cb) {
 		var imageSrc = $el.find('img').attr('src');
 		$el.data('imageSrc', imageSrc);
 
@@ -23,7 +23,7 @@
 				imageW: dim.width,
 				imageH: dim.height
 			});
-			adjustFocus($el);
+			adjustFocus($el, opt_cb);
 		});
 	};
 
@@ -74,13 +74,13 @@
 	};
 
 	//Re-adjust the focus
-	var adjustFocus = function($el) {
+	var adjustFocus = function($el, opt_cb) {
 		var imageW = $el.data('imageW');
 		var imageH = $el.data('imageH');
 		var imageSrc = $el.data('imageSrc');
 
 		if (!imageW && !imageH && !imageSrc) {
-			return setupContainer($el); //Setup the container first
+			return setupContainer($el, opt_cb); //Setup the container first
 		}
 
 		var containerW = $el.width();
@@ -122,23 +122,27 @@
 			top: vShift,
 			left: hShift
 		});
+
+		if (opt_cb) {
+			opt_cb();
+		}
 	};
 
 	var $window = $(window);
 
 	var focusPoint = function($el, settings) {
 		var thrAdjustFocus = settings.throttleDuration ?
-			throttle(function(){adjustFocus($el);}, settings.throttleDuration)
-			: function(){adjustFocus($el);};//Only throttle when desired
+			throttle(function(){adjustFocus($el, settings.onFocus);}, settings.throttleDuration)
+			: function(){adjustFocus($el, settings.onFocus);};//Only throttle when desired
 		var isListening = false;
 
-		adjustFocus($el); //Focus image in container
+		adjustFocus($el, settings.onFocus); //Focus image in container
 
 		//Expose a public API
 		return {
 
 			adjustFocus: function() {
-				return adjustFocus($el);
+				return adjustFocus($el, settings.onFocus);
 			},
 
 			windowOn: function() {
